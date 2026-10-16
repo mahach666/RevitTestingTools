@@ -1,6 +1,7 @@
 ﻿<#
 .SYNOPSIS
-    Собирает файлы релиза в папку artifacts: архив надстройки, CLI, инспектор, пакеты NuGet и SHA256SUMS.txt.
+    Собирает файлы релиза в папку artifacts: архивы надстройки по годам, MSI надстройки, CLI, инспектор, пакеты NuGet
+    и SHA256SUMS.txt. MSI (installer\RevitTestHost.Installer.wixproj) собирается, только когда собраны все годы 2020-2027.
 
 .DESCRIPTION
     Версия берётся из Directory.Build.props. Архив надстройки собирается на каждый год из -RevitVersions
@@ -57,6 +58,17 @@ foreach ($year in $years) {
     New-Zip $addinStage (Join-Path $Output "RevitTestHost-Addin-$version-Revit$year.zip")
 }
 
+# 1a. MSI надстройки (для текущего пользователя, все годы в одном файле): только когда собраны все годы 2020-2027
+$missing = @(2020..2027 | Where-Object { "$_" -notin $years })
+if ($missing.Count -eq 0) {
+    $msiBuild = Join-Path $stage 'installer'
+    Invoke-DotNet build (Join-Path $root 'installer\RevitTestHost.Installer.wixproj') -c Release "-p:AddinStageRoot=$stage" -o $msiBuild
+    Copy-Item -LiteralPath (Join-Path $msiBuild "RevitTestHost-Addin-$version.msi") -Destination $Output -Force
+}
+else {
+    Write-Warning "MSI надстройки не собран: нет годов $($missing -join ', ') (MSI включает все годы 2020-2027)."
+}
+
 # 2. CLI (нужен .NET 8 Runtime)
 $cliStage = Join-Path $stage 'cli'
 Invoke-DotNet publish (Join-Path $root 'src\RevitTestHost.Cli\RevitTestHost.Cli.csproj') -c Release -o $cliStage
@@ -72,7 +84,7 @@ Invoke-DotNet pack (Join-Path $root 'src\RevitTestHost.Sdk\RevitTestHost.Sdk.csp
 Invoke-DotNet pack (Join-Path $root 'src\RevitUITesting\RevitUITesting.csproj') -c Release -o $Output
 
 # 5. Контрольные суммы
-$files = @(Get-ChildItem -LiteralPath $Output -File | Where-Object { $_.Extension -in '.zip', '.nupkg', '.snupkg' } | Sort-Object Name)
+$files = @(Get-ChildItem -LiteralPath $Output -File | Where-Object { $_.Extension -in '.zip', '.msi', '.nupkg', '.snupkg' } | Sort-Object Name)
 $sums = $files | ForEach-Object { '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name }
 Set-Content -LiteralPath (Join-Path $Output 'SHA256SUMS.txt') -Value $sums -Encoding Ascii
 $sums

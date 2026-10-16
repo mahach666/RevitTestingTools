@@ -29,7 +29,7 @@
 dotnet build src/RevitTestHost.Addin/RevitTestHost.Addin.csproj -c Release -p:RevitVersion=2025
 ```
 
-Сборка в конфигурации Debug дополнительно копирует надстройку в `%ProgramData%\Autodesk\Revit\Addins\<год>\`, для 2027 в `%AppData%\Autodesk\Revit\Addins\2027\`: Revit 2027 не загружает манифесты из `%ProgramData%`. В релизе для каждого года есть готовый архив `RevitTestHost-Addin-<версия>-Revit<год>.zip`, его содержимое распаковывается в ту же папку.
+Сборка в конфигурации Debug дополнительно копирует надстройку в `%ProgramData%\Autodesk\Revit\Addins\<год>\`, для 2027 в `%AppData%\Autodesk\Revit\Addins\2027\`: Revit 2027 не загружает манифесты из `%ProgramData%`. В релизе для каждого года есть готовый архив `RevitTestHost-Addin-<версия>-Revit<год>.zip`, его содержимое распаковывается в ту же папку. Установщик `RevitTestHost-Addin-<версия>.msi` содержит все годы и ставит надстройку для текущего пользователя в `%AppData%\Autodesk\Revit\Addins\<год>\` для каждого установленного Revit.
 
 Для Revit 2020 нужен .NET Framework 4.7.2 или новее (так бывает на любой поддерживаемой Windows 10): SDK собран как netstandard2.0.
 

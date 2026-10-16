@@ -1,0 +1,17 @@
+<Project Sdk="WixToolset.Sdk/5.0.2">
+
+  <!-- MSI надстройки RevitTestHost для Revit 2020-2027. Собирается из папок addin-<год>, которые готовит tools/pack-release.ps1
+       (параметр AddinStageRoot); в решение не входит. Version приходит из Directory.Build.props. -->
+  <PropertyGroup>
+    <OutputName>RevitTestHost-Addin-$(Version)</OutputName>
+    <InstallerPlatform>x64</InstallerPlatform>
+    <DefineConstants>Version=$(Version);AddinStage=$(AddinStageRoot)</DefineConstants>
+    <!-- ICE91 предупреждает о файлах в профиле при установке на машину; пакет ставится только для пользователя (Scope="perUser") -->
+    <SuppressIces>ICE91</SuppressIces>
+  </PropertyGroup>
+
+  <Target Name="CheckAddinStage" BeforeTargets="Build">
+    <Error Condition="'$(AddinStageRoot)' == ''" Text="Не задан AddinStageRoot: MSI собирается из папок addin-&lt;год&gt;, которые готовит tools/pack-release.ps1." />
+  </Target>
+
+</Project>

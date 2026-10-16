@@ -6,6 +6,7 @@
 
 ### Добавлено
 
+- Установщик надстройки `RevitTestHost-Addin-<версия>.msi` (WiX): все годы 2020-2027 в одном файле, установка для текущего пользователя в `%AppData%\Autodesk\Revit\Addins\<год>\` только для установленных Revit, остановка при той же надстройке в `%ProgramData%` (Revit 2020-2026).
 - Публикация пакетов `RevitTestHost.Sdk` и `RevitUITesting` в nuget.org из `release.yml` по тегу `v*` через Trusted Publishing.
 
 ### Исправлено

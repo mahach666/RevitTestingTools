@@ -55,7 +55,7 @@ Not available yet: parameterized tests (`[RevitTheory]`), model-level fixtures, 
 
 ### Tests inside Revit
 
-Install the add-in: unpack the release archive for your Revit year into `%ProgramData%\Autodesk\Revit\Addins\<year>\` (for Revit 2027 into `%AppData%\Autodesk\Revit\Addins\2027\`: Revit 2027 does not load manifests from `%ProgramData%`), or build `RevitTestHost.Addin` in the Debug configuration, which copies the files itself. Then write tests:
+Install the add-in: run `RevitTestHost-Addin-<version>.msi` from the release (per user, no admin rights; installs into `%AppData%\Autodesk\Revit\Addins\<year>\` for every installed Revit 2020-2027), or unpack the release archive for your Revit year into `%ProgramData%\Autodesk\Revit\Addins\<year>\` (for Revit 2027 into `%AppData%\Autodesk\Revit\Addins\2027\`: Revit 2027 does not load manifests from `%ProgramData%`), or build `RevitTestHost.Addin` in the Debug configuration, which copies the files itself. Then write tests:
 
 ```csharp
 using RevitTestHost.Sdk.Attributes;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Установка для текущего пользователя: %AppData%\Autodesk\Revit\Addins\<год>\RevitTestHost.addin и TestHost\ со сборками,
+  как в zip-архиве года. Папка пользователя одна для всех лет: Revit 2027 манифесты из %ProgramData% не загружает, а права
+  администратора не нужны. Год ставится, только если найден C:\Program Files\Autodesk\Revit <год>\Revit.exe.
+  Тексты на английском: таблицы MSI в кодовой странице 1252.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="RevitTestHost" Manufacturer="mahach666" Version="$(var.Version)" Scope="perUser"
+           UpgradeCode="4a46e4a9-6a04-46f1-b98f-b2a0e8c8d2a7">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of RevitTestHost is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <?foreach YEAR in 2020;2021;2022;2023;2024;2025;2026;2027?>
+    <Property Id="REVIT$(var.YEAR)">
+      <DirectorySearch Id="RevitDir$(var.YEAR)" Path="[ProgramFiles64Folder]Autodesk\Revit $(var.YEAR)" Depth="0">
+        <FileSearch Name="Revit.exe" />
+      </DirectorySearch>
+    </Property>
+    <?endforeach?>
+
+    <Launch Condition="Installed OR REVIT2020 OR REVIT2021 OR REVIT2022 OR REVIT2023 OR REVIT2024 OR REVIT2025 OR REVIT2026 OR REVIT2027"
+            Message="Revit 2020-2027 was not found in [ProgramFiles64Folder]Autodesk. Install Revit first or unpack the add-in archive for your Revit year manually." />
+
+    <!-- Revit 2020-2026 читают и %ProgramData%: та же надстройка там и в %AppData% даёт повтор AddInId -->
+    <?foreach YEAR in 2020;2021;2022;2023;2024;2025;2026?>
+    <Property Id="PROGRAMDATA$(var.YEAR)">
+      <DirectorySearch Id="ProgramDataDir$(var.YEAR)" Path="[CommonAppDataFolder]Autodesk\Revit\Addins\$(var.YEAR)" Depth="0">
+        <FileSearch Name="RevitTestHost.addin" />
+      </DirectorySearch>
+    </Property>
+    <Launch Condition="Installed OR NOT (REVIT$(var.YEAR) AND PROGRAMDATA$(var.YEAR))"
+            Message="RevitTestHost is already installed for Revit $(var.YEAR) in [CommonAppDataFolder]Autodesk\Revit\Addins\$(var.YEAR). Remove RevitTestHost.addin and the TestHost folder there, then run this installer again." />
+    <?endforeach?>
+
+    <StandardDirectory Id="AppDataFolder">
+      <Directory Id="AutodeskDir" Name="Autodesk">
+        <Directory Id="RevitDir" Name="Revit">
+          <Directory Id="AddinsDir" Name="Addins">
+            <?foreach YEAR in 2020;2021;2022;2023;2024;2025;2026;2027?>
+            <Directory Id="YearDir$(var.YEAR)" Name="$(var.YEAR)">
+              <Directory Id="TestHostDir$(var.YEAR)" Name="TestHost" />
+            </Directory>
+            <?endforeach?>
+          </Directory>
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="RevitTestHost">
+      <!-- Общие папки: удаляются, только если пусты (в них могут быть другие надстройки) -->
+      <Component Id="CommonDirs" Directory="AddinsDir" Guid="4a46e4a9-6a04-46f1-b98f-000000000001">
+        <RegistryValue Root="HKCU" Key="Software\RevitTestHost" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+        <RemoveFolder Id="RemoveAddinsDir" Directory="AddinsDir" On="uninstall" />
+        <RemoveFolder Id="RemoveRevitDir" Directory="RevitDir" On="uninstall" />
+        <RemoveFolder Id="RemoveAutodeskDir" Directory="AutodeskDir" On="uninstall" />
+      </Component>
+
+      <!-- GUID компонентов постоянны между версиями (правило компонентов MSI): префикс UpgradeCode, номер компонента и год.
+           Автоматический GUID WiX не даёт: у компонента и файлы, и ключ HKCU (KeyPath установки для пользователя, ICE38). -->
+      <?foreach YEAR in 2020;2021;2022;2023;2024;2025;2026;2027?>
+      <Component Id="Manifest$(var.YEAR)" Directory="YearDir$(var.YEAR)" Condition="REVIT$(var.YEAR)" Guid="4a46e4a9-6a04-46f1-b98f-10000000$(var.YEAR)">
+        <RegistryValue Root="HKCU" Key="Software\RevitTestHost\$(var.YEAR)" Name="Manifest" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="Manifest$(var.YEAR)" Source="$(var.AddinStage)\addin-$(var.YEAR)\RevitTestHost.addin" />
+        <RemoveFolder Id="RemoveYearDir$(var.YEAR)" Directory="YearDir$(var.YEAR)" On="uninstall" />
+      </Component>
+      <!-- TestHost\Tests с тестами пользователя не трогается; TestHost удаляется, только если пуст -->
+      <Component Id="Assemblies$(var.YEAR)" Directory="TestHostDir$(var.YEAR)" Condition="REVIT$(var.YEAR)" Guid="4a46e4a9-6a04-46f1-b98f-20000000$(var.YEAR)">
+        <RegistryValue Root="HKCU" Key="Software\RevitTestHost\$(var.YEAR)" Name="Assemblies" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="AddinDll$(var.YEAR)" Source="$(var.AddinStage)\addin-$(var.YEAR)\TestHost\RevitTestHost.Addin.dll" />
+        <File Id="CoreDll$(var.YEAR)" Source="$(var.AddinStage)\addin-$(var.YEAR)\TestHost\RevitTestHost.Core.dll" />
+        <File Id="SdkDll$(var.YEAR)" Source="$(var.AddinStage)\addin-$(var.YEAR)\TestHost\RevitTestHost.Sdk.dll" />
+        <RemoveFolder Id="RemoveTestHostDir$(var.YEAR)" Directory="TestHostDir$(var.YEAR)" On="uninstall" />
+      </Component>
+      <?endforeach?>
+    </Feature>
+  </Package>
+</Wix>

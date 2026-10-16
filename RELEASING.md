@@ -10,7 +10,7 @@
    powershell -ExecutionPolicy Bypass -File tools/pack-release.ps1
    ```
 
-   Файлы релиза появятся в `artifacts/`: восемь архивов надстройки (по одному на год Revit 2020-2027), CLI, инспектор, два пакета `.nupkg` с символами `.snupkg` и `SHA256SUMS.txt`.
+   Файлы релиза появятся в `artifacts/`: восемь архивов надстройки (по одному на год Revit 2020-2027), установщик надстройки `RevitTestHost-Addin-<версия>.msi`, CLI, инспектор, два пакета `.nupkg` с символами `.snupkg` и `SHA256SUMS.txt`.
 4. Закоммитьте изменения, поставьте тег и отправьте его:
 
    ```powershell

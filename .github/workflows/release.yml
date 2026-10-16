@@ -53,7 +53,9 @@ jobs:
           $notes += ''
           $notes += '### Установка'
           $notes += ''
-          $notes += 'Надстройка: возьмите архив RevitTestHost-Addin-<версия>-Revit<год>.zip для вашего года и распакуйте его в `%ProgramData%\Autodesk\Revit\Addins\<год>\` (для Revit 2027 в `%AppData%\Autodesk\Revit\Addins\2027\`). Живая проверка выполнена на Revit 2020, 2022, 2025 и 2027, остальные годы собираются, но не проверены вживую (см. docs/versions.md).'
+          $notes += 'Установщик: RevitTestHost-Addin-<версия>.msi ставит надстройку для текущего пользователя (без прав администратора) в `%AppData%\Autodesk\Revit\Addins\<год>\` для каждого установленного Revit 2020-2027.'
+          $notes += ''
+          $notes += 'Вручную: возьмите архив RevitTestHost-Addin-<версия>-Revit<год>.zip для вашего года и распакуйте его в `%ProgramData%\Autodesk\Revit\Addins\<год>\` (для Revit 2027 в `%AppData%\Autodesk\Revit\Addins\2027\`). Живая проверка выполнена на Revit 2020, 2022, 2025 и 2027, остальные годы собираются, но не проверены вживую (см. docs/versions.md).'
           $notes | Set-Content -LiteralPath release-notes.md -Encoding UTF8
           $files = @(Get-ChildItem artifacts -File | ForEach-Object { $_.FullName })
           gh release create $tag --draft --prerelease --title $tag --notes-file release-notes.md @files
