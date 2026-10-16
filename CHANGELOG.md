@@ -4,6 +4,10 @@
 
 ## [Не выпущено]
 
+### Добавлено
+
+- Публикация пакетов `RevitTestHost.Sdk` и `RevitUITesting` в nuget.org из `release.yml` по тегу `v*` через Trusted Publishing.
+
 ### Исправлено
 
 - Revit 2027: Debug-сборка и архив надстройки ставятся в `%AppData%\Autodesk\Revit\Addins\2027\`, потому что из `%ProgramData%` Revit 2027 манифесты не загружает.

@@ -19,11 +19,6 @@
    ```
 
 5. Workflow [release.yml](.github/workflows/release.yml) по тегу `v*` соберёт и проверит решение, подготовит те же файлы и создаст на GitHub черновик релиза с пометкой pre-release. Описание берётся из раздела версии в `CHANGELOG.md`. Проверьте черновик и опубликуйте его.
-6. Пакеты в nuget.org отправляются вручную (нужен ключ API):
-
-   ```powershell
-   dotnet nuget push artifacts/RevitTestHost.Sdk.0.1.0.nupkg --source https://api.nuget.org/v3/index.json --api-key <ключ>
-   dotnet nuget push artifacts/RevitUITesting.0.1.0.nupkg --source https://api.nuget.org/v3/index.json --api-key <ключ>
-   ```
+6. Тот же workflow сразу отправляет `RevitTestHost.Sdk` и `RevitUITesting` в nuget.org через Trusted Publishing: ключ API не хранится, GitHub Actions получает временный ключ по политике nuget.org (владелец `mahach`, репозиторий `mahach666/RevitTestingTools`, workflow `release.yml`). Публикуются пакеты с версией из тега; если `Version` в `Directory.Build.props` не совпадает с тегом, шаг падает и ничего не отправляет. Опубликованную версию на nuget.org нельзя удалить, только скрыть (unlist).
 
 Перед выпуском на новую версию Revit проверьте, что надстройка в ней загружается, и повторите контрактные тесты (см. [docs/revit-ui-testing.md](docs/revit-ui-testing.md#контрактные-тесты)). Архив надстройки собирается против Revit API версии, указанной в параметре `-RevitVersion` скрипта `pack-release.ps1` (по умолчанию 2022).

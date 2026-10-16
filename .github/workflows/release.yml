@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write # Trusted Publishing nuget.org: OIDC-токен меняется на временный API-ключ
 
 jobs:
   release:
@@ -57,3 +58,24 @@ jobs:
           $files = @(Get-ChildItem artifacts -File | ForEach-Object { $_.FullName })
           gh release create $tag --draft --prerelease --title $tag --notes-file release-notes.md @files
           if ($LASTEXITCODE -ne 0) { throw "gh release create завершился с кодом $LASTEXITCODE" }
+
+      # Политика Trusted Publishing на nuget.org (владелец mahach) разрешает этому workflow только RevitTestHost.Sdk и RevitUITesting
+      - name: NuGet login
+        id: nuget-login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0 (= v1): стороннее действие с id-token, закреплено на коммите
+        with:
+          user: mahach
+
+      # Пакеты берутся по версии из тега: если Directory.Build.props не совпадает с тегом, файла нет и ничего не публикуется
+      - name: Push to nuget.org
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: |
+          $version = $env:GITHUB_REF_NAME.TrimStart('v')
+          foreach ($id in 'RevitTestHost.Sdk', 'RevitUITesting') {
+            $package = Join-Path artifacts "$id.$version.nupkg"
+            if (-not (Test-Path -LiteralPath $package)) { throw "Нет пакета $($package): версия в Directory.Build.props не совпадает с тегом?" }
+            dotnet nuget push $package --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+            if ($LASTEXITCODE -ne 0) { throw "dotnet nuget push $id завершился с кодом $LASTEXITCODE" }
+          }
