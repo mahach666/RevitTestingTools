@@ -1,0 +1,29 @@
+﻿# 2026-10-16 02:59, Revit 2027 ENU, MAHACH
+## Показанная панель «Properties» (DockablePanePage.Dump(8))
+[Pane] cls="Afx:ControlBar:20f60000:8:10003:10" id="60163" name="Properties" {X=6,Y=374,Width=610,Height=784} pat=[LegacyIAccessible]
+  [Pane] cls="Afx:00007FF620F60000:b:0000000000010003:0000000000000006:0000000002B808F3" {X=6,Y=374,Width=610,Height=784} pat=[LegacyIAccessible]
+    [Text] cls="Static" id="65535" name="VScrollBarSkin" {X=578,Y=589,Width=38,Height=518} pat=[LegacyIAccessible]
+    [ComboBox] cls="ComboBox" id="3119" name="VScrollBarSkin" value="Structural Plan: Level 1" {X=6,Y=534,Width=467,Height=51} pat=[ExpandCollapse,LegacyIAccessible,Value]
+      [Text] name="VScrollBarSkin" value="Structural Plan: Level 1" offscreen {X=3,Y=3,Width=423,Height=45} pat=[LegacyIAccessible,Value]
+      [Button] id="DropDown" name="Открыть" {X=436,Y=535,Width=36,Height=49} pat=[Invoke,LegacyIAccessible]
+    [Text] cls="Static" id="12520" {X=6,Y=374,Width=803,Height=160} pat=[LegacyIAccessible]
+    [Button] cls="Button" id="1105" name="Edit Type" {X=473,Y=534,Width=143,Height=50} pat=[Invoke,LegacyIAccessible]
+    [Pane] cls="GXWND" id="1102" name="Custom1" {X=6,Y=589,Width=610,Height=518} pat=[LegacyIAccessible,Scroll]
+      [ScrollBar] id="NonClientVerticalScrollBar" name="По вертикали" {X=578,Y=589,Width=38,Height=518} pat=[LegacyIAccessible,RangeValue]
+        [Button] id="UpButton" name="Строка вверх" {X=578,Y=589,Width=38,Height=38} pat=[Invoke,LegacyIAccessible]
+        [Thumb] id="ScrollbarThumb" name="Положение" {X=578,Y=627,Width=38,Height=108} pat=[LegacyIAccessible]
+        [Button] id="DownPageButton" name="Прокрутить вниз" {X=578,Y=735,Width=38,Height=334} pat=[Invoke,LegacyIAccessible]
+        [Button] id="DownButton" name="Строка вниз" {X=578,Y=1069,Width=38,Height=38} pat=[Invoke,LegacyIAccessible]
+    [Text] cls="Static" id="56800" {X=6,Y=1107,Width=447,Height=51} pat=[LegacyIAccessible]
+    [Button] cls="Button" id="56781" {X=8,Y=1108,Width=46,Height=51} pat=[Invoke,LegacyIAccessible]
+    [Button] cls="Button" id="56782" {X=58,Y=1108,Width=46,Height=51} pat=[Invoke,LegacyIAccessible]
+    [Button] cls="Button" id="56783" {X=108,Y=1108,Width=46,Height=51} pat=[Invoke,LegacyIAccessible]
+    [Button] cls="Button" id="1005" name="Apply" disabled {X=453,Y=1107,Width=163,Height=51} pat=[Invoke,LegacyIAccessible]
+    [List] cls="ItemsControl" {X=6,Y=374,Width=610,Height=162} pat=[ItemContainer,LegacyIAccessible,SynchronizedInput]
+      [DataItem] cls="ItemsControlItem" name="UIFramework.TypeSelector" {X=6,Y=374,Width=610,Height=162} pat=[LegacyIAccessible,SynchronizedInput]
+        [Custom] id="TypeSelector_RibbonItemControl" name="Structural Plan" {X=6,Y=374,Width=610,Height=162} pat=[LegacyIAccessible,SynchronizedInput]
+          [ComboBox] cls="ComboBox" id="TypeSelector" {X=6,Y=374,Width=610,Height=162} pat=[ExpandCollapse,ItemContainer,LegacyIAccessible,Selection,SynchronizedInput]
+
+## После клика по переключателю «ID_TOGGLE_PROPERTIES_PALETTE»: показанной панели нет за 15 с — True; ToggleState Off
+Рамок «Properties» в дереве UIA (FindPanes, без отбора по экрану): 0
+

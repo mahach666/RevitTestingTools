@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-release-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'build/RevitVersion.props') }}
+          restore-keys: ${{ runner.os }}-nuget-release-
+
+      - name: Build
+        run: dotnet build RevitTestingTools.sln -c Release
+
+      - name: Test
+        run: dotnet test RevitTestingTools.sln -c Release --no-build
+
+      - name: Pack
+        shell: pwsh
+        run: ./tools/pack-release.ps1
+
+      # Черновик с пометкой pre-release: публикует его человек после проверки
+      - name: Create draft release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          $version = $tag.TrimStart('v')
+          $changelog = Get-Content -LiteralPath CHANGELOG.md -Encoding UTF8
+          $start = [array]::FindIndex($changelog, [Predicate[string]] { param($l) $l.StartsWith("## [$version]") })
+          if ($start -lt 0) { throw "В CHANGELOG.md нет раздела версии $version" }
+          $notes = @()
+          for ($i = $start + 1; $i -lt $changelog.Count -and -not $changelog[$i].StartsWith('## [') -and $changelog[$i] -notmatch '^\[[^\]]+\]: '; $i++) { $notes += $changelog[$i] }
+          $notes += ''
+          $notes += '### Установка'
+          $notes += ''
+          $notes += 'Надстройка: возьмите архив RevitTestHost-Addin-<версия>-Revit<год>.zip для вашего года и распакуйте его в `%ProgramData%\Autodesk\Revit\Addins\<год>\` (для Revit 2027 в `%AppData%\Autodesk\Revit\Addins\2027\`). Живая проверка выполнена на Revit 2020, 2022, 2025 и 2027, остальные годы собираются, но не проверены вживую (см. docs/versions.md).'
+          $notes | Set-Content -LiteralPath release-notes.md -Encoding UTF8
+          $files = @(Get-ChildItem artifacts -File | ForEach-Object { $_.FullName })
+          gh release create $tag --draft --prerelease --title $tag --notes-file release-notes.md @files
+          if ($LASTEXITCODE -ne 0) { throw "gh release create завершился с кодом $LASTEXITCODE" }

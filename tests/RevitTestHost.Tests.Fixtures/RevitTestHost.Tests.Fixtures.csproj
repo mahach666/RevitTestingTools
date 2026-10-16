@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Образец тестовой сборки плагина. Рядом с ней лежит собственная копия RevitTestHost.Sdk.dll:
+       ровно та ситуация, которую обязан пережить TestLoadContext. Сборка не запускается как тесты и не упаковывается. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RevitTestHost.Sdk\RevitTestHost.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

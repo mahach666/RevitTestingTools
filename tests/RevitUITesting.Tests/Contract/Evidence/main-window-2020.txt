@@ -1,0 +1,7 @@
+﻿# 2026-10-16 02:23, Revit 2020 ENU, MAHACH
+Name: Autodesk Revit 2020.2 - [Home]
+ClassName: Window
+ping: Revit 2020, pid 59340, сервер 1.0, idle=True, активный документ: нет
+«759a6641-9814-4a24-8e74-c4a0f2502880Monitor» [WindowsForms10.Window.8.app.0.27a779c_r187_ad1]
+
+«Family» [Afx:00007FF7F73A0000:8:0000000000010003:0000000000000000:0000000000000000]

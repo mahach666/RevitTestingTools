@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RevitTestHost.Sdk</RootNamespace>
+    <AssemblyName>RevitTestHost.Sdk</AssemblyName>
+    <IsPackable>true</IsPackable>
+    <Description>SDK with attributes and contracts for writing tests that run inside live Revit via RevitTestHost.</Description>
+    <PackageId>RevitTestHost.Sdk</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Revit API приходит пакетами под net48 (reference assemblies), PrivateAssets=all: в зависимости пакета SDK они не попадают -->
+    <!-- CS1591: часть публичных членов без XML-комментариев -->
+    <NoWarn>$(NoWarn);NU1701;CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>autodesk;revit;api;tests;testing</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Компилируемся против МЛАДШЕЙ поддерживаемой версии API (2020): публичные типы SDK есть во всех годах до 2027 -->
+    <PackageReference Include="Nice3Point.Revit.Api.RevitAPI" Version="2020.*" PrivateAssets="all" />
+    <PackageReference Include="Nice3Point.Revit.Api.RevitAPIUI" Version="2020.*" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

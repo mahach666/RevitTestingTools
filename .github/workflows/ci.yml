@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'build/RevitVersion.props') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      # Release: Debug-сборка надстройки копирует файлы в %ProgramData%\Autodesk\Revit
+      - name: Build
+        run: dotnet build RevitTestingTools.sln -c Release
+
+      # Контрактные тесты требуют живой Revit и помечены [Explicit], в CI они пропускаются.
+      # Тесты хоста идут на net48, net8.0 и net10.0.
+      - name: Test
+        run: dotnet test RevitTestingTools.sln -c Release --no-build
+
+  revit-matrix:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        revit: [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027]
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ matrix.revit }}-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'build/RevitVersion.props') }}
+          restore-keys: ${{ runner.os }}-nuget-${{ matrix.revit }}-
+
+      # Проверка совместимости с Revit API этого года на уровне компиляции. Работу в Revit она не проверяет.
+      - name: Build add-in
+        run: dotnet build src/RevitTestHost.Addin/RevitTestHost.Addin.csproj -c Release -p:RevitVersion=${{ matrix.revit }}
+
+      - name: Build sample
+        run: dotnet build samples/RevitTestHost.SampleTests/RevitTestHost.SampleTests.csproj -c Release -p:RevitVersion=${{ matrix.revit }}

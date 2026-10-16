@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>RevitTestHost</Name>
+    <Assembly>TestHost\RevitTestHost.Addin.dll</Assembly>
+    <FullClassName>RevitTestHost.Addin.TestHostApplication</FullClassName>
+    <ClientId>770c23e2-3b3a-4ea3-89a2-d59899bed9a0</ClientId>
+    <VendorId>RTH</VendorId>
+    <VendorDescription>RevitTestHost — universal test runner for Revit plugins</VendorDescription>
+  </AddIn>
+</RevitAddIns>

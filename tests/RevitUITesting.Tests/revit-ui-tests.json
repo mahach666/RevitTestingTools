@@ -1,0 +1,16 @@
+{
+  "revitVersion": "2022",
+  "language": "ENU",
+  "attachToRunning": false,
+  "keepRevitOpen": false,
+  "dpiAware": true,
+  "minFreeCommitGb": 5,
+  "trustAddins": [
+    "770c23e2-3b3a-4ea3-89a2-d59899bed9a0"
+  ],
+  "defaultTimeoutSeconds": 30,
+  "revitStartTimeoutSeconds": 600,
+  "hostTimeoutSeconds": 60,
+  "modelOpenTimeoutSeconds": 300,
+  "revitExitTimeoutSeconds": 90
+}

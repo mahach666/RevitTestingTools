@@ -1,0 +1,22 @@
+<Project>
+
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Authors>mahach666</Authors>
+    <Copyright>Copyright (c) 2026 mahach666</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mahach666/RevitTestingTools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mahach666/RevitTestingTools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <!-- Пакетами становятся только проекты, которые сами ставят IsPackable=true -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Исходники для отладчика пользователя: SourceLink входит в .NET SDK, нужны адрес репозитория, коммит и встраивание -->
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+</Project>

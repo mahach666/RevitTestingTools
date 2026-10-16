@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../build/RevitVersion.props" />
+
+  <!-- Пример Revit-тестов для режима сервера (@active + параметры run). Не входит в RevitTestHost.sln:
+       Debug-сборка кладёт DLL в TestHost\Tests\ и тест попадает во все прогоны (CLI без фильтра, кнопка ленты),
+       поэтому пример собирается только явно. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RevitTestHost.SampleTests</RootNamespace>
+    <AssemblyName>RevitTestHost.SampleTests</AssemblyName>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nice3Point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Nice3Point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RevitTestHost.Sdk\RevitTestHost.Sdk.csproj" />
+  </ItemGroup>
+
+  <!-- В Tests\ кладём только сборку примера: копия RevitTestHost.Sdk.dll рядом сломала бы идентичность типов атрибутов -->
+  <Target Name="DeploySampleTests" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+    <PropertyGroup>
+      <RevitTestsFolder>$(RevitAddinsRoot)TestHost\Tests\</RevitTestsFolder>
+    </PropertyGroup>
+    <MakeDir Directories="$(RevitTestsFolder)" Condition="!Exists('$(RevitTestsFolder)')" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(RevitTestsFolder)" SkipUnchangedFiles="true" />
+    <Message Text="Deployed $(AssemblyName).dll to $(RevitTestsFolder)" Importance="high" />
+  </Target>
+
+</Project>

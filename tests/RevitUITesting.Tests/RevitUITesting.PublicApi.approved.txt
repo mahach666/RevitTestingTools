@@ -1,0 +1,536 @@
+RevitUITesting.KnownDialogSetting | class
+RevitUITesting.KnownDialogSetting | ctor()
+RevitUITesting.KnownDialogSetting | property Title : System.String { get; set; }
+RevitUITesting.KnownDialogSetting | property TextContains : System.String { get; set; }
+RevitUITesting.KnownDialogSetting | property Answer : System.String { get; set; }
+RevitUITesting.LocalFileBackup | class
+RevitUITesting.LocalFileBackup | static method Take(params System.String[] paths) : RevitUITesting.LocalFileBackup
+RevitUITesting.LocalFileBackup | method Restore() : System.Void
+RevitUITesting.LocalFileBackup | property Paths : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.LogLine | class
+RevitUITesting.LogLine | method ToString() : System.String
+RevitUITesting.LogLine | property Log : System.String { get; }
+RevitUITesting.LogLine | property Text : System.String { get; }
+RevitUITesting.LogLine | property Level : System.String { get; }
+RevitUITesting.LogWatch | class
+RevitUITesting.LogWatch | ctor(System.String logsDirectory, System.Collections.Generic.IEnumerable<System.String> logNames)
+RevitUITesting.LogWatch | ctor(System.String logsDirectory, System.Collections.Generic.IEnumerable<System.String> logNames, System.String extension, System.Text.RegularExpressions.Regex levelPattern)
+RevitUITesting.LogWatch | method Mark() : System.Void
+RevitUITesting.LogWatch | method NewLines() : System.Collections.Generic.IReadOnlyList<RevitUITesting.LogLine>
+RevitUITesting.LogWatch | method WaitLine(System.Func<RevitUITesting.LogLine, System.Boolean> match, System.TimeSpan timeout, System.String description) : RevitUITesting.LogLine
+RevitUITesting.LogWatch | method LastPluginVersion(System.String logName) : System.String
+RevitUITesting.NUnit.CatalogAssert | static class
+RevitUITesting.NUnit.CatalogAssert | static method Check(FlaUI.Core.AutomationElements.AutomationElement scope, System.Type section, params System.String[] ignore) : RevitUITesting.NUnit.CatalogReport
+RevitUITesting.NUnit.CatalogAssert | static method AllPresent(FlaUI.Core.AutomationElements.AutomationElement scope, System.Type section, params System.String[] ignore) : RevitUITesting.NUnit.CatalogReport
+RevitUITesting.NUnit.CatalogReport | class
+RevitUITesting.NUnit.CatalogReport | method ToString() : System.String
+RevitUITesting.NUnit.CatalogReport | property Section : System.String { get; }
+RevitUITesting.NUnit.CatalogReport | property Found : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.NUnit.CatalogReport | property Missing : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.NUnit.CatalogReport | property Skipped : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.NUnit.CatalogReport | property Unknown : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.NUnit.RevitSession | static class
+RevitUITesting.NUnit.RevitSession | static method Acquire(RevitUITesting.RevitUiConfig config) : RevitUITesting.Revit.RevitApp
+RevitUITesting.NUnit.RevitSession | static method Restart() : RevitUITesting.Revit.RevitApp
+RevitUITesting.NUnit.RevitSession | static method End() : System.Void
+RevitUITesting.NUnit.RevitSession | static property Config : RevitUITesting.RevitUiConfig { get; }
+RevitUITesting.NUnit.RevitSession | static property Current : RevitUITesting.Revit.RevitApp { get; }
+RevitUITesting.NUnit.RevitUiModelAttribute | class : System.Attribute
+RevitUITesting.NUnit.RevitUiModelAttribute | ctor(System.String path)
+RevitUITesting.NUnit.RevitUiModelAttribute | method Resolve(System.String testDirectory) : System.String
+RevitUITesting.NUnit.RevitUiModelAttribute | property Path : System.String { get; }
+RevitUITesting.NUnit.RevitUiModelAttribute | property CopyToTemp : System.Boolean { get; set; }
+RevitUITesting.NUnit.RevitUiModelAttribute | property IsNew : System.Boolean { get; }
+RevitUITesting.NUnit.RevitUiTestBase | class
+RevitUITesting.NUnit.RevitUiTestBase | protected ctor()
+RevitUITesting.NUnit.RevitUiTestBase | method RevitOneTimeSetUp() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | method RevitOneTimeTearDown() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | method RevitSetUp() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | method RevitTearDown() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method CreateLogWatch() : RevitUITesting.LogWatch
+RevitUITesting.NUnit.RevitUiTestBase | protected method OnBeforeTests() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method OnAfterTests() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method Step(System.String text) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method AfterTest(System.String description, System.Action restore) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method AfterTests(System.String description, System.Action restore) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method RestoreFileAfterTests(System.String path) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method AssertInRevit(System.String filter, System.Collections.Generic.IDictionary<System.String, System.String> parameters = null) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method AssertNoRevitErrors() : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method AssertNoLogErrors(System.Func<RevitUITesting.LogLine, System.Boolean> isError = null) : System.Void
+RevitUITesting.NUnit.RevitUiTestBase | protected method LogLines(System.Func<RevitUITesting.LogLine, System.Boolean> match = null) : System.Collections.Generic.IReadOnlyList<RevitUITesting.LogLine>
+RevitUITesting.NUnit.RevitUiTestBase | protected method WaitLog(System.Func<RevitUITesting.LogLine, System.Boolean> match, System.TimeSpan? timeout = null, System.String description = null) : RevitUITesting.LogLine
+RevitUITesting.NUnit.RevitUiTestBase | protected method NewOutputPath(System.String fileName) : System.String
+RevitUITesting.NUnit.RevitUiTestBase | protected property Config : RevitUITesting.RevitUiConfig { get; }
+RevitUITesting.NUnit.RevitUiTestBase | protected property App : RevitUITesting.Revit.RevitApp { get; }
+RevitUITesting.NUnit.RevitUiTestBase | protected property Host : RevitUITesting.Revit.RevitHostClient { get; }
+RevitUITesting.NUnit.RevitUiTestBase | protected property Model : RevitUITesting.Revit.HostDocument { get; }
+RevitUITesting.NUnit.RevitUiTestBase | protected property Timeout : System.TimeSpan { get; }
+RevitUITesting.NUnit.TestArtifacts | class
+RevitUITesting.NUnit.TestArtifacts | static method For(RevitUITesting.RevitUiConfig config, System.String className, System.String testName, System.DateTime stamp) : RevitUITesting.NUnit.TestArtifacts
+RevitUITesting.NUnit.TestArtifacts | method PathOf(System.String fileName) : System.String
+RevitUITesting.NUnit.TestArtifacts | method WriteText(System.String fileName, System.String text, System.String description) : System.String
+RevitUITesting.NUnit.TestArtifacts | method Screen(System.String fileName = "screen.png") : System.String
+RevitUITesting.NUnit.TestArtifacts | method Windows(System.Collections.Generic.IEnumerable<FlaUI.Core.AutomationElements.AutomationElement> windows, System.String fileName = "windows.txt") : System.String
+RevitUITesting.NUnit.TestArtifacts | static method Prune(RevitUITesting.RevitUiConfig config) : System.Void
+RevitUITesting.NUnit.TestArtifacts | property Folder : System.String { get; }
+RevitUITesting.Pages.DockablePanePage | class : RevitUITesting.Pages.UiPage
+RevitUITesting.Pages.DockablePanePage | ctor(RevitUITesting.Revit.RevitApp app, System.String title)
+RevitUITesting.Pages.DockablePanePage | protected method ResolveRoot() : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.DockablePanePage | property Title : System.String { get; }
+RevitUITesting.Pages.DockablePanePage | property IsShown : System.Boolean { get; }
+RevitUITesting.Pages.RevitDialogPage | class : RevitUITesting.Pages.UiPage
+RevitUITesting.Pages.RevitDialogPage | ctor(RevitUITesting.Revit.RevitApp app, FlaUI.Core.AutomationElements.AutomationElement window)
+RevitUITesting.Pages.RevitDialogPage | protected ctor(RevitUITesting.Pages.RevitDialogPage dialog)
+RevitUITesting.Pages.RevitDialogPage | static method OpenedBy(RevitUITesting.Revit.RevitApp app, System.Action open, RevitUITesting.Uia.By selector = null, System.TimeSpan? timeout = null) : RevitUITesting.Pages.RevitDialogPage
+RevitUITesting.Pages.RevitDialogPage | static method WaitFor(RevitUITesting.Revit.RevitApp app, System.String title, System.TimeSpan? timeout = null) : RevitUITesting.Pages.RevitDialogPage
+RevitUITesting.Pages.RevitDialogPage | protected method ResolveRoot() : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.RevitDialogPage | method WaitClosed(System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Pages.RevitDialogPage | method Close() : System.Void
+RevitUITesting.Pages.RevitDialogPage | method ClickAndWaitClosed(System.String automationId) : System.Void
+RevitUITesting.Pages.RevitDialogPage | method ClickTextAndWaitClosed(System.String caption) : System.Void
+RevitUITesting.Pages.RevitDialogPage | property Window : FlaUI.Core.AutomationElements.Window { get; }
+RevitUITesting.Pages.RevitDialogPage | property Title : System.String { get; }
+RevitUITesting.Pages.RevitDialogPage | property Id : System.String { get; }
+RevitUITesting.Pages.RevitDialogPage | property ClassName : System.String { get; }
+RevitUITesting.Pages.RevitDialogPage | property Handle : System.IntPtr { get; }
+RevitUITesting.Pages.RevitDialogPage | property IsOpen : System.Boolean { get; }
+RevitUITesting.Pages.UiList | class
+RevitUITesting.Pages.UiList | ctor(System.Func<FlaUI.Core.AutomationElements.AutomationElement> root, System.String description)
+RevitUITesting.Pages.UiList | method Rows() : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Pages.UiList | method RowTexts() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Pages.UiList | method Row(params System.String[] parts) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiList | method Select(params System.String[] parts) : System.Void
+RevitUITesting.Pages.UiList | method ToString() : System.String
+RevitUITesting.Pages.UiList | property Root : FlaUI.Core.AutomationElements.AutomationElement { get; }
+RevitUITesting.Pages.UiPage | class
+RevitUITesting.Pages.UiPage | protected ctor(RevitUITesting.Revit.RevitApp app, System.String description)
+RevitUITesting.Pages.UiPage | protected method ResolveRoot() : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiPage | method Find(System.String automationId, System.TimeSpan? timeout = null) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiPage | method Find(RevitUITesting.Uia.By selector, System.TimeSpan? timeout = null) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiPage | method TryFind(System.String automationId) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiPage | method TryFind(RevitUITesting.Uia.By selector) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Pages.UiPage | method Has(System.String automationId) : System.Boolean
+RevitUITesting.Pages.UiPage | method Has(RevitUITesting.Uia.By selector) : System.Boolean
+RevitUITesting.Pages.UiPage | method AssertAbsent(RevitUITesting.Uia.By selector, System.TimeSpan? stableFor = null) : System.Void
+RevitUITesting.Pages.UiPage | method Click(System.String automationId, System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Pages.UiPage | method Click(RevitUITesting.Uia.By selector, System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Pages.UiPage | method ClickText(System.String caption, System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Pages.UiPage | method MouseClick(RevitUITesting.Uia.By selector) : System.Void
+RevitUITesting.Pages.UiPage | method DoubleClick(RevitUITesting.Uia.By selector) : System.Void
+RevitUITesting.Pages.UiPage | method RightClick(RevitUITesting.Uia.By selector) : System.Void
+RevitUITesting.Pages.UiPage | method SetValue(System.String automationId, System.String value) : System.Void
+RevitUITesting.Pages.UiPage | method SetValue(RevitUITesting.Uia.By selector, System.String value) : System.Void
+RevitUITesting.Pages.UiPage | method ValueOf(System.String automationId) : System.String
+RevitUITesting.Pages.UiPage | method ValueOf(RevitUITesting.Uia.By selector) : System.String
+RevitUITesting.Pages.UiPage | method IsEnabled(RevitUITesting.Uia.By selector) : System.Boolean
+RevitUITesting.Pages.UiPage | method IsChecked(RevitUITesting.Uia.By selector) : System.Boolean?
+RevitUITesting.Pages.UiPage | method SetChecked(RevitUITesting.Uia.By selector, System.Boolean value, RevitUITesting.Uia.CheckInput input = TogglePattern) : System.Void
+RevitUITesting.Pages.UiPage | method ComboItems(RevitUITesting.Uia.By combo) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Pages.UiPage | method Choose(RevitUITesting.Uia.By combo, System.String itemCaption) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Pages.UiPage | method Texts() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Pages.UiPage | method TryText(System.Func<System.String, System.Boolean> match) : System.String
+RevitUITesting.Pages.UiPage | method WaitText(System.Func<System.String, System.Boolean> match, System.TimeSpan? timeout = null, System.String description = null) : System.String
+RevitUITesting.Pages.UiPage | method ListBy(RevitUITesting.Uia.By selector) : RevitUITesting.Pages.UiList
+RevitUITesting.Pages.UiPage | method ListById(System.String listId) : RevitUITesting.Pages.UiList
+RevitUITesting.Pages.UiPage | method GridById(System.String gridId) : RevitUITesting.Uia.UiGrid
+RevitUITesting.Pages.UiPage | method Dump(System.Int32 maxDepth = 40) : System.String
+RevitUITesting.Pages.UiPage | method ToString() : System.String
+RevitUITesting.Pages.UiPage | property App : RevitUITesting.Revit.RevitApp { get; }
+RevitUITesting.Pages.UiPage | property Description : System.String { get; }
+RevitUITesting.Pages.UiPage | property Root : FlaUI.Core.AutomationElements.AutomationElement { get; }
+RevitUITesting.Pages.UiPage | protected property ReadTimeout : System.TimeSpan { get; }
+RevitUITesting.Revit.HostDocument | class
+RevitUITesting.Revit.HostDocument | method ToString() : System.String
+RevitUITesting.Revit.HostDocument | property Title : System.String { get; }
+RevitUITesting.Revit.HostDocument | property Path : System.String { get; }
+RevitUITesting.Revit.HostDocument | property IsActive : System.Boolean { get; }
+RevitUITesting.Revit.HostDocument | property IsModified : System.Boolean { get; }
+RevitUITesting.Revit.HostDocument | property IsFamilyDocument : System.Boolean { get; }
+RevitUITesting.Revit.HostErrorCodes | static class
+RevitUITesting.Revit.HostErrorCodes | const field BadRequest : System.String = "BAD_REQUEST"
+RevitUITesting.Revit.HostErrorCodes | const field UnknownCommand : System.String = "UNKNOWN_COMMAND"
+RevitUITesting.Revit.HostErrorCodes | const field NotFound : System.String = "NOT_FOUND"
+RevitUITesting.Revit.HostErrorCodes | const field ActiveDocument : System.String = "ACTIVE_DOCUMENT"
+RevitUITesting.Revit.HostErrorCodes | const field RevitError : System.String = "REVIT_ERROR"
+RevitUITesting.Revit.HostErrorException | class : System.InvalidOperationException
+RevitUITesting.Revit.HostErrorException | ctor(System.String command, System.String code, System.String message)
+RevitUITesting.Revit.HostErrorException | property Command : System.String { get; }
+RevitUITesting.Revit.HostErrorException | property Code : System.String { get; }
+RevitUITesting.Revit.HostErrorException | property HostMessage : System.String { get; }
+RevitUITesting.Revit.HostPing | class
+RevitUITesting.Revit.HostPing | method ToString() : System.String
+RevitUITesting.Revit.HostPing | property ServerVersion : System.String { get; }
+RevitUITesting.Revit.HostPing | property RevitVersion : System.String { get; }
+RevitUITesting.Revit.HostPing | property Pid : System.Int32 { get; }
+RevitUITesting.Revit.HostPing | property Idle : System.Boolean { get; }
+RevitUITesting.Revit.HostPing | property ActiveDocument : RevitUITesting.Revit.HostDocument { get; }
+RevitUITesting.Revit.HostRunReport | class
+RevitUITesting.Revit.HostRunReport | method ToString() : System.String
+RevitUITesting.Revit.HostRunReport | property Total : System.Int32 { get; }
+RevitUITesting.Revit.HostRunReport | property Passed : System.Int32 { get; }
+RevitUITesting.Revit.HostRunReport | property Failed : System.Int32 { get; }
+RevitUITesting.Revit.HostRunReport | property Errored : System.Int32 { get; }
+RevitUITesting.Revit.HostRunReport | property Skipped : System.Int32 { get; }
+RevitUITesting.Revit.HostRunReport | property DurationMs : System.Int64 { get; }
+RevitUITesting.Revit.HostRunReport | property RevitVersion : System.String { get; }
+RevitUITesting.Revit.HostRunReport | property Results : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.HostTestResult> { get; }
+RevitUITesting.Revit.HostRunReport | property Warnings : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Revit.HostRunReport | property Failures : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.HostTestResult> { get; }
+RevitUITesting.Revit.HostTestResult | class
+RevitUITesting.Revit.HostTestResult | method ToString() : System.String
+RevitUITesting.Revit.HostTestResult | property Class : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property Method : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property Status : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property Message : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property StackTrace : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property Model : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property DurationMs : System.Int64 { get; }
+RevitUITesting.Revit.HostTestResult | property FullName : System.String { get; }
+RevitUITesting.Revit.HostTestResult | property IsFailure : System.Boolean { get; }
+RevitUITesting.Revit.KnownDialog | class
+RevitUITesting.Revit.KnownDialog | ctor(System.String name, System.String title, System.String textContains, RevitUITesting.Revit.KnownDialogAction action, System.String answerCaption = null, System.Boolean isRevitError = false, System.String hint = null, System.Int32 taskDialogButtonId = 0)
+RevitUITesting.Revit.KnownDialog | method Matches(System.String title, System.String text) : System.Boolean
+RevitUITesting.Revit.KnownDialog | method ToString() : System.String
+RevitUITesting.Revit.KnownDialog | property Name : System.String { get; }
+RevitUITesting.Revit.KnownDialog | property Title : System.String { get; }
+RevitUITesting.Revit.KnownDialog | property TextContains : System.String { get; }
+RevitUITesting.Revit.KnownDialog | property Action : RevitUITesting.Revit.KnownDialogAction { get; }
+RevitUITesting.Revit.KnownDialog | property AnswerCaption : System.String { get; }
+RevitUITesting.Revit.KnownDialog | property IsRevitError : System.Boolean { get; }
+RevitUITesting.Revit.KnownDialog | property Hint : System.String { get; }
+RevitUITesting.Revit.KnownDialog | property TaskDialogButtonId : System.Int32 { get; }
+RevitUITesting.Revit.KnownDialogAction | enum
+RevitUITesting.Revit.KnownDialogAction | enum Answer = 0
+RevitUITesting.Revit.KnownDialogAction | enum Close = 1
+RevitUITesting.Revit.KnownDialogAction | enum Fail = 2
+RevitUITesting.Revit.KnownDialogAction | enum TaskDialogButton = 3
+RevitUITesting.Revit.RevitApp | class
+RevitUITesting.Revit.RevitApp | static method StartOrAttach(RevitUITesting.RevitUiConfig config) : RevitUITesting.Revit.RevitApp
+RevitUITesting.Revit.RevitApp | method TopLevelWindows() : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Revit.RevitApp | method EnsureAlive() : System.Void
+RevitUITesting.Revit.RevitApp | method BringToFront() : System.Void
+RevitUITesting.Revit.RevitApp | method SendKeys(System.String description, params FlaUI.Core.WindowsAPI.VirtualKeyShort[] keys) : System.Void
+RevitUITesting.Revit.RevitApp | method CloseActiveDocument() : System.Void
+RevitUITesting.Revit.RevitApp | method Quit() : System.Void
+RevitUITesting.Revit.RevitApp | method Restart() : RevitUITesting.Revit.RevitApp
+RevitUITesting.Revit.RevitApp | method Kill(System.String reason) : System.Void
+RevitUITesting.Revit.RevitApp | method Screenshot(System.String name) : System.String
+RevitUITesting.Revit.RevitApp | method Dispose() : System.Void
+RevitUITesting.Revit.RevitApp | property Config : RevitUITesting.RevitUiConfig { get; }
+RevitUITesting.Revit.RevitApp | property Process : System.Diagnostics.Process { get; }
+RevitUITesting.Revit.RevitApp | property ProcessId : System.Int32 { get; }
+RevitUITesting.Revit.RevitApp | property PipeName : System.String { get; }
+RevitUITesting.Revit.RevitApp | property StartedByUs : System.Boolean { get; }
+RevitUITesting.Revit.RevitApp | property IsAlive : System.Boolean { get; }
+RevitUITesting.Revit.RevitApp | property Automation : FlaUI.Core.AutomationBase { get; }
+RevitUITesting.Revit.RevitApp | property Host : RevitUITesting.Revit.RevitHostClient { get; }
+RevitUITesting.Revit.RevitApp | property Windows : RevitUITesting.Revit.RevitWindows { get; }
+RevitUITesting.Revit.RevitApp | property Panes : RevitUITesting.Revit.RevitPanes { get; }
+RevitUITesting.Revit.RevitApp | property Ribbon : RevitUITesting.Revit.RevitRibbon { get; }
+RevitUITesting.Revit.RevitApp | property MainWindow : FlaUI.Core.AutomationElements.Window { get; }
+RevitUITesting.Revit.RevitApp | const field ServeVariable : System.String = "REVITTESTHOST_SERVE"
+RevitUITesting.Revit.RevitApp | const field CliVariable : System.String = "REVITTESTHOST_CLI"
+RevitUITesting.Revit.RevitBusyException | class : RevitUITesting.Uia.AppBusyException
+RevitUITesting.Revit.RevitBusyException | ctor(System.String command, System.TimeSpan timeout, System.TimeSpan elapsed, System.String openWindows)
+RevitUITesting.Revit.RevitBusyException | property Command : System.String { get; }
+RevitUITesting.Revit.RevitBusyException | property OpenWindows : System.String { get; }
+RevitUITesting.Revit.RevitDialogs | static class
+RevitUITesting.Revit.RevitDialogs | static method Catalog(System.Collections.Generic.IEnumerable<RevitUITesting.KnownDialogSetting> extra) : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.KnownDialog>
+RevitUITesting.Revit.RevitDialogs | static method Match(System.Collections.Generic.IEnumerable<RevitUITesting.Revit.KnownDialog> catalog, System.String title, System.String text) : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static property BuiltIn : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.KnownDialog> { get; }
+RevitUITesting.Revit.RevitDialogs | static readonly field SaveChanges : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static readonly field UnsignedAddinEn : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static readonly field UnsignedAddinRu : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static readonly field CloseWithoutSaving : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static readonly field RevitError : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitDialogs | static readonly field RevitWarning : RevitUITesting.Revit.KnownDialog
+RevitUITesting.Revit.RevitExitedException | class : System.InvalidOperationException
+RevitUITesting.Revit.RevitExitedException | ctor(System.Int32 processId, System.Int32? exitCode, System.String journalTail)
+RevitUITesting.Revit.RevitExitedException | property ProcessId : System.Int32 { get; }
+RevitUITesting.Revit.RevitExitedException | property ExitCode : System.Int32? { get; }
+RevitUITesting.Revit.RevitExitedException | property JournalTail : System.String { get; }
+RevitUITesting.Revit.RevitHostClient | class
+RevitUITesting.Revit.RevitHostClient | method Ping() : RevitUITesting.Revit.HostPing
+RevitUITesting.Revit.RevitHostClient | method WaitIdle() : RevitUITesting.Revit.HostPing
+RevitUITesting.Revit.RevitHostClient | method Documents() : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.HostDocument>
+RevitUITesting.Revit.RevitHostClient | method Open(System.String pathOrNew, System.Boolean copyToTemp) : RevitUITesting.Revit.HostDocument
+RevitUITesting.Revit.RevitHostClient | method Close(System.String title) : System.Void
+RevitUITesting.Revit.RevitHostClient | method ClosePath(System.String path) : System.Void
+RevitUITesting.Revit.RevitHostClient | method Run(System.String filter, System.Collections.Generic.IDictionary<System.String, System.String> parameters = null, System.String model = "@active") : RevitUITesting.Revit.HostRunReport
+RevitUITesting.Revit.RevitHostClient | method AssertRun(System.String filter, System.Collections.Generic.IDictionary<System.String, System.String> parameters = null) : System.Void
+RevitUITesting.Revit.RevitHostClient | method Dispose() : System.Void
+RevitUITesting.Revit.RevitHostClient | property PipeName : System.String { get; }
+RevitUITesting.Revit.RevitHostClient | property Timeout : System.TimeSpan { get; }
+RevitUITesting.Revit.RevitHostClient | property LongTimeout : System.TimeSpan { get; }
+RevitUITesting.Revit.RevitHostClient | const field NewModel : System.String = "@new"
+RevitUITesting.Revit.RevitHostClient | const field ActiveModel : System.String = "@active"
+RevitUITesting.Revit.RevitIds | static class
+RevitUITesting.Revit.RevitIds+Dialogs | static class
+RevitUITesting.Revit.RevitIds+Dialogs | const field TaskDialogClass : System.String = "#32770"
+RevitUITesting.Revit.RevitIds+Dialogs | const field TaskDialogNoButtonId : System.Int32 = 7
+RevitUITesting.Revit.RevitIds+Dialogs | const field PopupClass : System.String = "Popup"
+RevitUITesting.Revit.RevitIds+Dialogs | const field RibbonToolTipName : System.String = "Autodesk.Windows.RibbonToolTip"
+RevitUITesting.Revit.RevitIds+Dialogs | const field RibbonToolTipClass : System.String = "ToolTip"
+RevitUITesting.Revit.RevitIds+Dialogs | const field UnsignedAddinAlwaysLoadButtonId : System.Int32 = 1001
+RevitUITesting.Revit.RevitIds+Panes | static class
+RevitUITesting.Revit.RevitIds+Panes | static readonly field FrameTypes : FlaUI.Core.Definitions.ControlType[]
+RevitUITesting.Revit.RevitIds+Panes | const field PropertiesToggle : System.String = "ID_TOGGLE_PROPERTIES_PALETTE"
+RevitUITesting.Revit.RevitIds+Panes | const field SearchDepth : System.Int32 = 12
+RevitUITesting.Revit.RevitIds+Ribbon | static class
+RevitUITesting.Revit.RevitIds+Ribbon | static readonly field Root : RevitUITesting.Uia.By
+RevitUITesting.Revit.RevitIds+Ribbon | static readonly field TabType : FlaUI.Core.Definitions.ControlType
+RevitUITesting.Revit.RevitIds+Ribbon | static readonly field ButtonTypes : FlaUI.Core.Definitions.ControlType[]
+RevitUITesting.Revit.RevitIds+Ribbon | static readonly field CollapsedPanel : RevitUITesting.Uia.By
+RevitUITesting.Revit.RevitIds+Ribbon | const field TabContentSuffix : System.String = "_PanelBarScrollViewer"
+RevitUITesting.Revit.RevitIds+Ribbon | const field CollapsedPanelImageId : System.String = "mCollapsedPanelImage"
+RevitUITesting.Revit.RevitIds+Ribbon | const field ButtonIdsExposed : System.Boolean = true
+RevitUITesting.Revit.RevitIds+Ribbon | const field ApiIdSeparator : System.String = "%"
+RevitUITesting.Revit.RevitIds+Ribbon | const field SearchDepth : System.Int32 = 20
+RevitUITesting.Revit.RevitIds+TestHost | static class
+RevitUITesting.Revit.RevitIds+TestHost | const field RunAllTests : System.String = "RunAllTests"
+RevitUITesting.Revit.RevitIds+TestHost | const field AddinId : System.String = "770c23e2-3b3a-4ea3-89a2-d59899bed9a0"
+RevitUITesting.Revit.RevitPanes | class
+RevitUITesting.Revit.RevitPanes | method Find(System.String title) : RevitUITesting.Pages.DockablePanePage
+RevitUITesting.Revit.RevitPanes | method TryFind(System.String title) : RevitUITesting.Pages.DockablePanePage
+RevitUITesting.Revit.RevitPanes | method Titles() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Revit.RevitRibbon | class
+RevitUITesting.Revit.RevitRibbon | method Tabs() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Revit.RevitRibbon | method Tab(System.String name) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Revit.RevitRibbon | method Button(System.String tab, System.String button) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Revit.RevitRibbon | method Click(System.String tab, System.String button) : System.Void
+RevitUITesting.Revit.RevitRibbon | method ClickInMenu(System.String tab, System.String pulldown, System.String item) : System.Void
+RevitUITesting.Revit.RevitTaskDialog | class
+RevitUITesting.Revit.RevitTaskDialog | ctor(FlaUI.Core.AutomationElements.AutomationElement window)
+RevitUITesting.Revit.RevitTaskDialog | method Buttons() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Revit.RevitTaskDialog | method Answer(System.String caption) : System.Void
+RevitUITesting.Revit.RevitTaskDialog | property Window : FlaUI.Core.AutomationElements.AutomationElement { get; }
+RevitUITesting.Revit.RevitTaskDialog | property Handle : System.IntPtr { get; }
+RevitUITesting.Revit.RevitTaskDialog | property Title : System.String { get; }
+RevitUITesting.Revit.RevitTaskDialog | property IsOpen : System.Boolean { get; }
+RevitUITesting.Revit.RevitTaskDialog | property Text : System.String { get; }
+RevitUITesting.Revit.RevitTitles | static class
+RevitUITesting.Revit.RevitTitles+Dialogs | static class
+RevitUITesting.Revit.RevitTitles+Dialogs | const field SaveChangesText : System.String = "save changes"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field No : System.String = "No"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field Yes : System.String = "Yes"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field Cancel : System.String = "Cancel"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field UnsignedAddinEn : System.String = "Security - Unsigned Add-In"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field UnsignedAddinRu : System.String = "Безопасность — Надстройка без подписи"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field CloseWithoutSaving : System.String = "Close Project Without Saving"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field ErrorPrefix : System.String = "Error"
+RevitUITesting.Revit.RevitTitles+Dialogs | const field WarningPrefix : System.String = "Warning"
+RevitUITesting.Revit.RevitTitles+Manage | static class
+RevitUITesting.Revit.RevitTitles+Manage | const field ProjectUnits : System.String = "Project Units"
+RevitUITesting.Revit.RevitTitles+Manage | const field AdditionalSettings : System.String = "Additional Settings"
+RevitUITesting.Revit.RevitTitles+Manage | const field LineStyles : System.String = "Line Styles"
+RevitUITesting.Revit.RevitTitles+Panes | static class
+RevitUITesting.Revit.RevitTitles+Panes | const field Properties : System.String = "Properties"
+RevitUITesting.Revit.RevitTitles+Panes | const field ProjectBrowserPrefix : System.String = "Project Browser - "
+RevitUITesting.Revit.RevitTitles+Tabs | static class
+RevitUITesting.Revit.RevitTitles+Tabs | const field Architecture : System.String = "Architecture"
+RevitUITesting.Revit.RevitTitles+Tabs | const field Manage : System.String = "Manage"
+RevitUITesting.Revit.RevitTitles+Tabs | const field View : System.String = "View"
+RevitUITesting.Revit.RevitTitles+Tabs | const field AddIns : System.String = "Add-Ins"
+RevitUITesting.Revit.RevitTitles+Tabs | const field Modify : System.String = "Modify"
+RevitUITesting.Revit.RevitTitles+Tabs | const field TestHost : System.String = "TestHost"
+RevitUITesting.Revit.RevitTitles+TestHost | static class
+RevitUITesting.Revit.RevitTitles+TestHost | const field Panel : System.String = "Test Runner"
+RevitUITesting.Revit.RevitTitles+TestHost | const field RunAllTests : System.String = "Run All\nTests"
+RevitUITesting.Revit.RevitTitles+TestHost | const field ResultsDialog : System.String = "RevitTestHost — Test Results"
+RevitUITesting.Revit.RevitTitles+View | static class
+RevitUITesting.Revit.RevitTitles+View | const field ThreeDView : System.String = "3D View"
+RevitUITesting.Revit.RevitTitles+View | const field DefaultThreeDView : System.String = "Default 3D View"
+RevitUITesting.Revit.RevitTitles+Windows | static class
+RevitUITesting.Revit.RevitTitles+Windows | const field MainPrefix : System.String = "Autodesk Revit "
+RevitUITesting.Revit.RevitWindows | class
+RevitUITesting.Revit.RevitWindows | method All() : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Revit.RevitWindows | method Popups() : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Revit.RevitWindows | method OpenedBy(System.Action open, RevitUITesting.Uia.By selector = null, System.TimeSpan? timeout = null) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Revit.RevitWindows | method WaitGone(FlaUI.Core.AutomationElements.AutomationElement window, System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Revit.RevitWindows | method WaitGone(System.String title, System.TimeSpan? timeout = null) : System.Void
+RevitUITesting.Revit.RevitWindows | method TryTaskDialog() : RevitUITesting.Revit.RevitTaskDialog
+RevitUITesting.Revit.RevitWindows | method WaitTaskDialog(System.TimeSpan? timeout = null) : RevitUITesting.Revit.RevitTaskDialog
+RevitUITesting.Revit.RevitWindows | method RevitErrors() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Revit.RevitWindows | method DescribeDialogs() : System.String
+RevitUITesting.Revit.RevitWindows | method ResetUi() : RevitUITesting.Revit.UiResetReport
+RevitUITesting.Revit.RevitWindows | property Catalog : System.Collections.Generic.IReadOnlyList<RevitUITesting.Revit.KnownDialog> { get; }
+RevitUITesting.Revit.RevitWindows | property IsMainWindowEnabled : System.Boolean { get; }
+RevitUITesting.Revit.UiResetReport | class
+RevitUITesting.Revit.UiResetReport | method ToString() : System.String
+RevitUITesting.Revit.UiResetReport | property Actions : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Revit.UiResetReport | property RevitErrors : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Revit.UiResetReport | property Remaining : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Revit.UiResetReport | property Clean : System.Boolean { get; }
+RevitUITesting.RevitUiConfig | class
+RevitUITesting.RevitUiConfig | ctor()
+RevitUITesting.RevitUiConfig | static method Load(System.String baseDirectory = null) : RevitUITesting.RevitUiConfig
+RevitUITesting.RevitUiConfig | method HasSection(System.String name) : System.Boolean
+RevitUITesting.RevitUiConfig | method Section<T>(System.String name) : T
+RevitUITesting.RevitUiConfig | method Validate() : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.RevitUiConfig | method Describe() : System.String
+RevitUITesting.RevitUiConfig | property RevitVersion : System.String { get; set; }
+RevitUITesting.RevitUiConfig | property RevitExe : System.String { get; set; }
+RevitUITesting.RevitUiConfig | property Language : System.String { get; set; }
+RevitUITesting.RevitUiConfig | property AttachToRunning : System.Boolean { get; set; }
+RevitUITesting.RevitUiConfig | property KeepRevitOpen : System.Boolean { get; set; }
+RevitUITesting.RevitUiConfig | property DpiAware : System.Boolean { get; set; }
+RevitUITesting.RevitUiConfig | property MinFreeCommitGb : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property TrustAddins : System.String[] { get; set; }
+RevitUITesting.RevitUiConfig | property KnownDialogs : System.Collections.Generic.List<RevitUITesting.KnownDialogSetting> { get; set; }
+RevitUITesting.RevitUiConfig | property DefaultTimeoutSeconds : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property RevitStartTimeoutSeconds : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property HostTimeoutSeconds : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property ModelOpenTimeoutSeconds : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property RevitExitTimeoutSeconds : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property ArtifactsDir : System.String { get; set; }
+RevitUITesting.RevitUiConfig | property ArtifactsKeep : System.Int32 { get; set; }
+RevitUITesting.RevitUiConfig | property UnknownKeys : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.RevitUiConfig | property Sources : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.RevitUiConfig | property SectionNames : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.RevitUiConfig | property ResolvedRevitExe : System.String { get; }
+RevitUITesting.RevitUiConfig | property ProcessName : System.String { get; }
+RevitUITesting.RevitUiConfig | property ResolvedArtifactsDir : System.String { get; }
+RevitUITesting.RevitUiConfig | property DefaultTimeout : System.TimeSpan { get; }
+RevitUITesting.RevitUiConfig | property RevitStartTimeout : System.TimeSpan { get; }
+RevitUITesting.RevitUiConfig | property HostTimeout : System.TimeSpan { get; }
+RevitUITesting.RevitUiConfig | property ModelOpenTimeout : System.TimeSpan { get; }
+RevitUITesting.RevitUiConfig | property RevitExitTimeout : System.TimeSpan { get; }
+RevitUITesting.RevitUiConfig | const field FileName : System.String = "revit-ui-tests.json"
+RevitUITesting.RevitUiConfig | const field LocalFileName : System.String = "revit-ui-tests.local.json"
+RevitUITesting.RevitUiConfig | const field EnvironmentPrefix : System.String = "REVIT_UI_"
+RevitUITesting.RevitUiConfig | const field SectionsKey : System.String = "sections"
+RevitUITesting.ShownWhenAttribute | class : System.Attribute
+RevitUITesting.ShownWhenAttribute | ctor(System.String condition)
+RevitUITesting.ShownWhenAttribute | property Condition : System.String { get; }
+RevitUITesting.UiLog | static class
+RevitUITesting.UiLog | static method Step(System.String text) : System.Void
+RevitUITesting.UiLog | static method Warn(System.String text) : System.Void
+RevitUITesting.UiLog | static method Recent(System.Int32 count = 20) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.UiLog | static method Dump() : System.String
+RevitUITesting.UiLog | static method Action(System.String text) : System.Void
+RevitUITesting.UiLog | static property Sink : System.Action<System.String> { get; set; }
+RevitUITesting.Uia.AmbiguousElementException | class : System.InvalidOperationException
+RevitUITesting.Uia.AmbiguousElementException | ctor(System.String what, System.Collections.Generic.IReadOnlyList<System.String> matches)
+RevitUITesting.Uia.AmbiguousElementException | property Matches : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Uia.AppBusyException | class : RevitUITesting.Uia.UiWaitTimeoutException
+RevitUITesting.Uia.AppBusyException | protected ctor(System.String description, System.TimeSpan timeout, System.TimeSpan elapsed, System.Exception lastError, System.String details)
+RevitUITesting.Uia.AppBusyException | ctor(System.String description, System.TimeSpan timeout, System.TimeSpan elapsed, System.Int32 busyFaults, System.Exception lastError)
+RevitUITesting.Uia.AppBusyException | property BusyFaults : System.Int32 { get; }
+RevitUITesting.Uia.AutomationElementExtensions | static class
+RevitUITesting.Uia.AutomationElementExtensions | static method ById(FlaUI.Core.AutomationElements.AutomationElement root, System.String automationId) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method ByName(FlaUI.Core.AutomationElements.AutomationElement root, System.String name) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method Find(FlaUI.Core.AutomationElements.AutomationElement root, RevitUITesting.Uia.By selector, System.TimeSpan? timeout = null, System.String scope = null) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method TryFind(FlaUI.Core.AutomationElements.AutomationElement root, RevitUITesting.Uia.By selector) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method FindAll(FlaUI.Core.AutomationElements.AutomationElement root, RevitUITesting.Uia.By selector, System.Int32 maxDepth = 60) : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Uia.AutomationElementExtensions | static method Texts(FlaUI.Core.AutomationElements.AutomationElement element) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Uia.AutomationElementExtensions | static method Rows(FlaUI.Core.AutomationElements.AutomationElement list) : System.Collections.Generic.IReadOnlyList<FlaUI.Core.AutomationElements.AutomationElement>
+RevitUITesting.Uia.AutomationElementExtensions | static method TryRowContaining(FlaUI.Core.AutomationElements.AutomationElement list, params System.String[] parts) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method RowContaining(FlaUI.Core.AutomationElements.AutomationElement list, params System.String[] parts) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeChildren(FlaUI.Core.AutomationElements.AutomationElement element) : FlaUI.Core.AutomationElements.AutomationElement[]
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeName(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeAutomationId(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeClassName(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeControlType(FlaUI.Core.AutomationElements.AutomationElement element) : FlaUI.Core.Definitions.ControlType
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeIsEnabled(FlaUI.Core.AutomationElements.AutomationElement element) : System.Boolean
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeIsOffscreen(FlaUI.Core.AutomationElements.AutomationElement element) : System.Boolean
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeHelpText(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeIsSelected(FlaUI.Core.AutomationElements.AutomationElement element) : System.Boolean
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeIsAvailable(FlaUI.Core.AutomationElements.AutomationElement element) : System.Boolean
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeItemStatus(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeItemType(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeValue(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeToggleState(FlaUI.Core.AutomationElements.AutomationElement element) : FlaUI.Core.Definitions.ToggleState?
+RevitUITesting.Uia.AutomationElementExtensions | static method SafeHasKeyboardFocus(FlaUI.Core.AutomationElements.AutomationElement element) : System.Boolean
+RevitUITesting.Uia.AutomationElementExtensions | static method DumpTree(FlaUI.Core.AutomationElements.AutomationElement root, System.Int32 maxDepth = 60) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method DumpTree(FlaUI.Core.AutomationElements.AutomationElement root, System.Int32 maxDepth, System.Boolean details) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | static method Describe(FlaUI.Core.AutomationElements.AutomationElement element) : System.String
+RevitUITesting.Uia.AutomationElementExtensions | const field DefaultMaxDepth : System.Int32 = 60
+RevitUITesting.Uia.By | class
+RevitUITesting.Uia.By | static method Id(System.String automationId) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method IdPrefix(System.String prefix) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method Name(System.String name) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method NameStartsWith(System.String prefix) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method ClassName(System.String className) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method Type(FlaUI.Core.Definitions.ControlType type) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | static method Where(System.Func<RevitUITesting.Uia.ElementFacts, System.Boolean> predicate, System.String description) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | method And(RevitUITesting.Uia.By other) : RevitUITesting.Uia.By
+RevitUITesting.Uia.By | method Matches(RevitUITesting.Uia.ElementFacts facts) : System.Boolean
+RevitUITesting.Uia.By | method ToString() : System.String
+RevitUITesting.Uia.CheckInput | enum
+RevitUITesting.Uia.CheckInput | enum TogglePattern = 0
+RevitUITesting.Uia.CheckInput | enum MouseClick = 1
+RevitUITesting.Uia.DpiStatus | class
+RevitUITesting.Uia.DpiStatus | static method EnableForProcess() : RevitUITesting.Uia.DpiStatus
+RevitUITesting.Uia.DpiStatus | method ToString() : System.String
+RevitUITesting.Uia.DpiStatus | property IsPerMonitor : System.Boolean { get; }
+RevitUITesting.Uia.DpiStatus | property SystemDpi : System.Int32 { get; }
+RevitUITesting.Uia.DpiStatus | property How : System.String { get; }
+RevitUITesting.Uia.DpiStatus | property MouseCoordinatesMatch : System.Boolean { get; }
+RevitUITesting.Uia.DpiStatus | static property Current : RevitUITesting.Uia.DpiStatus { get; }
+RevitUITesting.Uia.ElementFacts | class
+RevitUITesting.Uia.ElementFacts | property Element : FlaUI.Core.AutomationElements.AutomationElement { get; }
+RevitUITesting.Uia.ElementFacts | property AutomationId : System.String { get; }
+RevitUITesting.Uia.ElementFacts | property Name : System.String { get; }
+RevitUITesting.Uia.ElementFacts | property ClassName : System.String { get; }
+RevitUITesting.Uia.ElementFacts | property ControlType : FlaUI.Core.Definitions.ControlType { get; }
+RevitUITesting.Uia.ElementFacts | property HelpText : System.String { get; }
+RevitUITesting.Uia.ElementFacts | property ItemStatus : System.String { get; }
+RevitUITesting.Uia.ElementNotFoundException | class : RevitUITesting.Uia.UiWaitTimeoutException
+RevitUITesting.Uia.ElementNotFoundException | ctor(System.String scope, System.String selector, System.TimeSpan timeout, System.TimeSpan elapsed, System.Collections.Generic.IReadOnlyList<System.String> idsInScope, System.Exception lastError)
+RevitUITesting.Uia.ElementNotFoundException | property Scope : System.String { get; }
+RevitUITesting.Uia.ElementNotFoundException | property Selector : System.String { get; }
+RevitUITesting.Uia.ElementNotFoundException | property IdsInScope : System.Collections.Generic.IReadOnlyList<System.String> { get; }
+RevitUITesting.Uia.UiActions | static class
+RevitUITesting.Uia.UiActions | static method Press(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method Click(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method DoubleClick(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method RightClick(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method Select(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method Expand(FlaUI.Core.AutomationElements.AutomationElement element, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method Keys(FlaUI.Core.AutomationElements.AutomationElement focusTarget, System.String description, params FlaUI.Core.WindowsAPI.VirtualKeyShort[] keys) : System.Void
+RevitUITesting.Uia.UiActions | static method TypeText(FlaUI.Core.AutomationElements.AutomationElement focusTarget, System.String text, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method SetValue(FlaUI.Core.AutomationElements.AutomationElement element, System.String value, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method SetChecked(FlaUI.Core.AutomationElements.AutomationElement element, System.Boolean value, RevitUITesting.Uia.CheckInput input, System.String description) : System.Void
+RevitUITesting.Uia.UiActions | static method Choose(System.Func<System.Collections.Generic.IEnumerable<FlaUI.Core.AutomationElements.AutomationElement>> popups, FlaUI.Core.AutomationElements.AutomationElement combo, System.String itemCaption, System.String description) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Uia.UiActions | static method ComboItems(System.Func<System.Collections.Generic.IEnumerable<FlaUI.Core.AutomationElements.AutomationElement>> popups, FlaUI.Core.AutomationElements.AutomationElement combo, System.String description) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Uia.UiGrid | class
+RevitUITesting.Uia.UiGrid | ctor(System.Func<FlaUI.Core.AutomationElements.AutomationElement> root, System.String description)
+RevitUITesting.Uia.UiGrid | method Columns() : System.Collections.Generic.IReadOnlyList<RevitUITesting.Uia.UiGridColumn>
+RevitUITesting.Uia.UiGrid | method Cell(System.Int32 row, System.String column) : System.String
+RevitUITesting.Uia.UiGrid | method Column(System.String column) : System.Collections.Generic.IReadOnlyList<System.String>
+RevitUITesting.Uia.UiGrid | method ReadAll(params System.String[] columns) : System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IReadOnlyDictionary<System.String, System.String>>
+RevitUITesting.Uia.UiGrid | method FindRow(System.String column, System.String value) : System.Int32
+RevitUITesting.Uia.UiGrid | method CellElement(System.Int32 row, System.String column) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.UiGrid | method RowElement(System.Int32 row) : FlaUI.Core.AutomationElements.AutomationElement
+RevitUITesting.Uia.UiGrid | method SelectRow(System.Int32 row) : System.Void
+RevitUITesting.Uia.UiGrid | method ToString() : System.String
+RevitUITesting.Uia.UiGrid | property Root : FlaUI.Core.AutomationElements.AutomationElement { get; }
+RevitUITesting.Uia.UiGrid | property RowCount : System.Int32 { get; }
+RevitUITesting.Uia.UiGridColumn | class
+RevitUITesting.Uia.UiGridColumn | method ToString() : System.String
+RevitUITesting.Uia.UiGridColumn | property FieldName : System.String { get; }
+RevitUITesting.Uia.UiGridColumn | property Caption : System.String { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | class : System.TimeoutException
+RevitUITesting.Uia.UiWaitTimeoutException | ctor(System.String description, System.TimeSpan timeout, System.TimeSpan elapsed, System.String lastObservation, System.Exception lastError)
+RevitUITesting.Uia.UiWaitTimeoutException | protected ctor(System.String description, System.TimeSpan timeout, System.TimeSpan elapsed, System.String lastObservation, System.Exception lastError, System.String details)
+RevitUITesting.Uia.UiWaitTimeoutException | property Description : System.String { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | property Timeout : System.TimeSpan { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | property Elapsed : System.TimeSpan { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | property LastObservation : System.String { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | property Diagnostics : System.String { get; }
+RevitUITesting.Uia.UiWaitTimeoutException | property Message : System.String { get; }
+RevitUITesting.Uia.ValueNotAppliedException | class : System.InvalidOperationException
+RevitUITesting.Uia.ValueNotAppliedException | ctor(System.String target, System.String expected, System.String actual)
+RevitUITesting.Uia.ValueNotAppliedException | property Target : System.String { get; }
+RevitUITesting.Uia.ValueNotAppliedException | property Expected : System.String { get; }
+RevitUITesting.Uia.ValueNotAppliedException | property Actual : System.String { get; }
+RevitUITesting.Uia.Wait | static class
+RevitUITesting.Uia.Wait | static method Until(System.Func<System.Boolean> condition, System.String description = null) : System.Void
+RevitUITesting.Uia.Wait | static method Until(System.Func<System.Boolean> condition, System.TimeSpan timeout, System.String description = null) : System.Void
+RevitUITesting.Uia.Wait | static method For<T>(System.Func<T> producer, System.String description = null) : T
+RevitUITesting.Uia.Wait | static method For<T>(System.Func<T> producer, System.TimeSpan timeout, System.String description = null) : T
+RevitUITesting.Uia.Wait | static method Stays(System.Func<System.Boolean> condition, System.TimeSpan duration, System.String description = null) : System.Boolean
+RevitUITesting.Uia.Wait | static method RecordUntil<T>(System.Func<T> sample, System.Func<T, System.Boolean> done, System.TimeSpan timeout, System.TimeSpan? interval = null, System.String description = null) : System.Collections.Generic.IReadOnlyList<T>
+RevitUITesting.Uia.Wait | static property PollInterval : System.TimeSpan { get; set; }
+RevitUITesting.Uia.Wait | static property UiBusyTimeout : System.TimeSpan { get; set; }
+RevitUITesting.Uia.Wait | static property DefaultTimeout : System.TimeSpan { get; set; }

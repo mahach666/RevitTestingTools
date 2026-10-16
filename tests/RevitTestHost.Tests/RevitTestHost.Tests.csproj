@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <!-- net10.0-windows (рантайм Revit 2027) только когда установлен .NET SDK 10: без него решение остаётся собираемым -->
+    <TargetFrameworks Condition="$([MSBuild]::VersionGreaterThanOrEquals($(NETCoreSdkVersion), '10.0'))">$(TargetFrameworks);net10.0-windows</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>RevitTestHost.Tests</RootNamespace>
+    <AssemblyName>RevitTestHost.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RevitTestHost.Core\RevitTestHost.Core.csproj" />
+    <!-- Только константы атрибутов SDK; Revit API в тесты не попадает (PrivateAssets=all в SDK). -->
+    <ProjectReference Include="..\..\src\RevitTestHost.Sdk\RevitTestHost.Sdk.csproj" />
+  </ItemGroup>
+
+  <!-- Образец тестовой сборки со своей копией Sdk кладётся в Fixtures/ и не подключается ссылкой -->
+  <ItemGroup>
+    <ProjectReference Include="../RevitTestHost.Tests.Fixtures/RevitTestHost.Tests.Fixtures.csproj" ReferenceOutputAssembly="false" OutputItemType="FixtureOutput" />
+  </ItemGroup>
+
+  <Target Name="CopyFixtures" AfterTargets="Build">
+    <ItemGroup>
+      <FixtureFile Include="@(FixtureOutput->'%(RootDir)%(Directory)RevitTestHost.Tests.Fixtures.dll')" />
+      <FixtureFile Include="@(FixtureOutput->'%(RootDir)%(Directory)RevitTestHost.Sdk.dll')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FixtureFile)" DestinationFolder="$(OutDir)Fixtures" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

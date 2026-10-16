@@ -1,0 +1,29 @@
+# Build outputs
+bin/
+obj/
+out/
+artifacts/
+*.user
+*.suo
+
+# IDE
+.vs/
+.idea/
+.vscode/
+*.swp
+
+# Test outputs
+TestResults/
+*.trx
+test-results-*.json
+
+# Local test settings (credentials)
+*.local.json
+
+# NuGet
+*.nupkg
+packages/
+
+# OS
+.DS_Store
+Thumbs.db

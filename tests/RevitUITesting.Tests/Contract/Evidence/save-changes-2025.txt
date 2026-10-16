@@ -1,0 +1,15 @@
+﻿# 2026-10-16 02:42, Revit 2025 ENU, MAHACH
+Title: Save File
+ClassName: #32770
+Text: Do you want to save changes to new-1.rvt?
+Buttons: Да | Нет | Отмена
+Главное окно доступно: False
+[Window] cls="#32770" name="Save File" {X=1494,Y=805,Width=824,Height=312} pat=[LegacyIAccessible,Transform,Window]
+  [Text] cls="Element" id="MainInstruction" name="Do you want to save changes to new-1.rvt?" {X=1531,Y=893,Width=679,Height=48} pat=[LegacyIAccessible,Value]
+  [Text] cls="Element" id="ContentText" offscreen {X=0,Y=0,Width=0,Height=0} pat=[LegacyIAccessible,Value]
+  [Button] cls="CCPushButton" id="CommandButton_6" name="Да" {X=1734,Y=1029,Width=173,Height=54} pat=[Invoke,LegacyIAccessible]
+  [Button] cls="CCPushButton" id="CommandButton_7" name="Нет" {X=1921,Y=1029,Width=173,Height=54} pat=[Invoke,LegacyIAccessible]
+  [Button] cls="CCPushButton" id="CommandButton_2" name="Отмена" {X=2108,Y=1029,Width=173,Height=54} pat=[Invoke,LegacyIAccessible]
+  [TitleBar] id="TitleBar" value="Save File" {X=1508,Y=808,Width=796,Height=62} pat=[LegacyIAccessible,Value]
+    [Button] id="Close" name="Закрыть" {X=2226,Y=806,Width=79,Height=64} pat=[Invoke,LegacyIAccessible]
+

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>RevitUITesting.Tests</RootNamespace>
+    <AssemblyName>RevitUITesting.Tests</AssemblyName>
+    <Description>Модульные тесты библиотеки RevitUITesting (без Revit).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RevitUITesting\RevitUITesting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- снимок публичного API: из него ничего не должно пропадать (совместимость с UI-тестами плагинов) -->
+    <None Update="RevitUITesting.PublicApi.approved.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="revit-ui-tests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

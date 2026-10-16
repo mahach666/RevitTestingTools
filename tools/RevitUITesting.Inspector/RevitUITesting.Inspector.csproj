@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <RootNamespace>RevitUITesting.Inspector</RootNamespace>
+    <AssemblyName>RevitUITesting.Inspector</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Description>Инструмент автора тестов: дамп дерева UI Automation окон Revit, скриншоты, действия над элементами.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RevitUITesting\RevitUITesting.csproj" />
+  </ItemGroup>
+
+</Project>

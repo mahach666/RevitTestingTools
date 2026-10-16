@@ -1,0 +1,150 @@
+﻿# 2026-10-08, Revit 2022.1 ENU, test-machine — закрывающий живой прогон
+Код: master @ edc782f (5f418fc + два Assert на запомненную страницу Properties и шаги для замера); прогон C — @ 99253ca (+ ERROR_TIMEOUT = занятость).
+RevitTestHost 9d9dc2c (Debug, режим сервера). revit-ui-tests.json: attachToRunning=false, keepRevitOpen=false, minFreeCommitGb=5.
+Модульные тесты: 380/380 перед каждым коммитом.
+
+## Запуски (dotnet test) и предусловия
+| Запуск | Начало | Revit.exe до | session.json до | свободный commit (CIM / CommitCheck) | Что | Процессы Revit (готов за) | Итог |
+| A | 09:18:50 | нет | нет | 5,85 ГБ / 5.7 | Category=RevitContract & FQN !~ RevitAppContractTests: CloseViaUi, Host, Ribbon (+ ContractSession) | 26184 (51 с) | 13/14 |
+| B | 09:30:35 | нет | нет | 5,76 ГБ / 5.7; 5.5; 5.5 | RevitAppContractTests | 44928 (43 с), 10116 (42 с), 30252 (оставлен после отказа запуска, закрыт Attach_and_quit) | 3/4 |
+| C | 09:34:55 | нет | нет | 5,32 ГБ / 5.3 | RevitAppContractTests: Leave_open + Attach_and_quit (после 99253ca) | 52692 (43 с) | 2/2 |
+
+## Запуск A — один Revit сеанса (pid 26184)
+| Класс.Тест | Итог | Время |
+| CloseViaUi.Ui_close_of_modified_document_answers_save_changes | PASS (TDM_CLICK_BUTTON 7) | 59 с |
+| CloseViaUi.CloseActiveDocument_closes_modified_document_without_saving | PASS (TDM_CLICK_BUTTON 7) | 19 с |
+| Host.New_model_is_saved_to_serve_folder_and_active | PASS | 1 с |
+| Host.Idle_becomes_true_after_quiet_period | PASS | 4 с |
+| Host.Run_active_with_expected_title_passes | PASS (всего 1, прошло 1) | 2 с |
+| Host.Run_active_with_wrong_title_is_reported_as_failure | PASS (всего 1, упало 1) | 2 с |
+| Host.Properties_pane_is_found_hidden_and_shown_again | FAIL на новом Assert: pane.IsShown после скрытия — True | 4 мин 58 с (из них ~3 мин — артефакты и возврат) |
+| Host.Unknown_modal_fails_reset_and_known_entry_closes_it | PASS | 13 с |
+| Ribbon.Tabs_include_revit_and_testhost | PASS | 3 с |
+| Ribbon.Modify_is_a_tab_for_tab_api_and_a_panel_button_for_button_api | PASS | 13 с |
+| Ribbon.Testhost_button_is_found_by_caption_and_by_internal_name | PASS | 9 с |
+| Ribbon.Button_click_opens_project_units | PASS | 14 с |
+| Ribbon.Pulldown_menu_item_opens_line_styles | PASS | 54 с |
+| Ribbon.Button_in_collapsed_panel_opens_project_units_in_narrow_window | PASS (возврат: showCmd 3, нормальные границы 1236,0–2299,700) | 47 с |
+Итого по классам: CloseViaUi 2/2, Host 5/6, Ribbon 6/6.
+
+Конец сеанса (ContractSession): изменённый «new-5»; 09:29:23.309 начало проверки → WM_CLOSE 09:29:24.478 → TDM_CLICK_BUTTON 7 «Save File» new-5.rvt 09:29:25.599 →
+09:29:35.308 «Revit pid 26184 закрыт без Kill». Строки «завершён принудительно» нет. session.json после запуска нет.
+
+### Properties: журнал шагов (модель new-3 открыта)
+09:21:29.446 > Найти панель Properties (полный поиск)
+09:21:50.543 > Dump(8) запомненной панели                       — Find: 21,1 с
+09:21:51.036 > ValueOf выбора элемента запомненной панели         — Dump(8): 0,49 с
+09:21:51.148 > Переключатель Properties и скрытие                 — ValueOf: 0,11 с
+09:21:52.870   Invoke вкладка ленты «Modify»
+09:22:12.530   клик по переключатель панели Properties (вкладка Modify): скрыть Properties (136,161)
+09:23:11.979 > Запомненная панель после скрытия
+09:23:12.091   провал: «запомненная страница видит, что рамка скрытой панели исчезла или ушла за экран» Expected False, But was True
+09:25:24.693   возврат: показать Properties (TryFind → null, т.е. панель действительно скрыта)
+09:25:59.471   клик по переключатель панели Properties: показать Properties после теста
+Ускорение I1 подтверждено: после первого Find действия на запомненной панели — доли секунды (в задаче 12: ~2 мин на Find + Dump + ValueOf).
+Скрытие подтверждено: показанной панели нет за 15 с — True; ToggleState Off; «Рамок «Properties» в дереве UIA (FindPanes, без отбора по экрану): 0»;
+в windows.txt артефакта рамки «Properties» тоже нет. При этом запомненная рамка ([Pane] cls="Afx:ControlBar:94280000:8:10003:10" id="60164" name="Properties",
+нативное окно MFC) на одно чтение IsOffscreen ответила false за ≤ 0,11 с — DockablePanePage.IsShown = true. Риск (a) из final-rereview.md вживую подтвердился:
+устаревшая рамка скрытой панели не исчезает и не уходит за экран для UIA. Библиотека не исправлялась (не тривиально). Шаги после скрытия
+(показ, IsShown/ValueOf переразрешённой страницы) не выполнены. Панель Properties в конце показана (возврат AfterTest).
+Артефакты: %TEMP%\RevitUITesting\artifacts\20261008_092312_091_RevitUITesting.Tests.Contract.HostContractTests.Properties_pane_is_found_hidden_and_shown_again
+
+## Запуск B — RevitAppContractTests
+| Тест | Итог | Время | Закрытие |
+| Start_ping_session_file_and_quit | PASS (session.json удалён при Quit) | 53 с | pid 44928: WM_CLOSE 09:31:22.814, без Kill |
+| Kept_open_revit_is_refused_without_attach_and_attached_with_it | PASS (подхват «готов за 1 с») | 52 с | pid 10116: WM_CLOSE 09:32:15.165, без Kill |
+| Leave_open_with_new_model_for_inspection | FAIL в StartOrAttach через 5 с после запуска | 5 с | Revit 30252 оставлен (keepRevitOpen) |
+| Attach_and_quit | PASS (подхватил 30252, готов за 38 с) | 47 с | WM_CLOSE 09:33:08.603 → 09:33:17.393 «закрыт без Kill» |
+Отказ Leave_open: System.Runtime.InteropServices.COMException 0x800705B4 (HRESULT_FROM_WIN32(ERROR_TIMEOUT), «превышение времени ожидания»)
+из IUIAutomationElement.FindAll ← RevitWindows.Infos («окна процесса Revit», FindAllChildren рабочего стола) ← KnownFailure ← RevitApp.FailOnKnownDialog
+← WaitReady ← Launch ← StartOrAttach. UiFault.Classify считал код «прочим» — UiQuery.Read и Wait.ForStrict его не повторяли, запуск упал.
+Исправление 99253ca: 0x800705B4 классифицируется как Busy (модульный тест в WaitTests.Uia_timeout_codes_are_busy, красный шаг — Expected Busy, But was Other).
+
+## Запуск C — повтор после 99253ca
+| Тест | Итог | Время | Закрытие |
+| Leave_open_with_new_model_for_inspection | PASS (pid 52692 готов за 43 с, открыт new-1, оставлен) | 51 с | — |
+| Attach_and_quit | PASS (подхват, готов за 2 с, активный new-1) | 13 с | WM_CLOSE 09:35:52.859 → 09:36:03.247 «закрыт без Kill» |
+Сбой 0x800705B4 в этом запуске не повторился: сам повтор занятого чтения вживую не наблюдался, исправление проверено модульным тестом.
+
+## Состояние после всех запусков
+Revit.exe не запущен; session.json нет; свободный commit 5,25 ГБ. HKCU\…\Autodesk Revit 2022\App windowPlacement = 1236,0,1063,700 (как до прогона),
+Revit.ini Maximized=1 (как до прогона). Kill не было ни разу. RevitSession.Restart() прогон не вызывал.
+
+## Запуск D — после исправления D1 (6eec742), Category=RevitContract & FQN !~ RevitAppContractTests
+Перед запуском (09:41:04): Revit.exe нет, session.json нет, свободный commit 5,47 ГБ (CommitCheck 5.4). Revit pid 41860, готов за 42 с.
+Исправление 6eec742: запомненная рамка DockablePanePage годится, только если NativeWindowHandle != 0, Native.IsShown(hwnd) (IsWindow + IsWindowVisible)
+и строгое IsOffscreen = false; иначе — полный поиск. Модульные тесты 384/384.
+| Класс.Тест | Итог | Время |
+| CloseViaUi.Ui_close_of_modified_document_answers_save_changes | PASS | 57 с |
+| CloseViaUi.CloseActiveDocument_closes_modified_document_without_saving | PASS | 22 с |
+| Host (6 тестов, в т.ч. Properties) | FAIL в SetUp/TearDown: тело тестов не выполнялось | ~2 мин каждый |
+| Ribbon (6 тестов) | FAIL в OneTimeSetUp (перед открытием модели класса) | 5 с каждый |
+Причина всех 12 отказов: после CloseViaUi на экране осталась всплывающая подсказка ленты (окно класса Popup, ToolTip
+«Autodesk.Windows.RibbonToolTip») кнопки «View Templates» вкладки View — снимок 20261008_094332_743_reset-ui.png: активна вкладка Architecture,
+подсказка висит у левого края ленты. ResetUi нажимает Esc, подсказка не закрывается: «всплывающее окно не закрылось по Esc» — 32 раза за прогон;
+перед тестом это отказ, тест не запускается. В запуске A похожая подсказка («Materials») была в доказательстве ribbon-pulldown, но тесты не остановила.
+Итог: D1 вживую не подтверждён и не опровергнут — Properties не дошёл до тела теста.
+Конец сеанса: изменённый new-4 → WM_CLOSE 09:56:03.094 → TDM_CLICK_BUTTON 7 09:56:04.155 → 09:56:12.962 «Revit pid 41860 закрыт без Kill».
+После запуска: Revit.exe нет, session.json нет, свободный commit 6,04 ГБ, windowPlacement 1236,0,1063,700, Maximized=1 — без изменений.
+
+## Решение по D3 (87c0927) и запуск E — НЕ ВЫПОЛНЕН (BLOCKED)
+Исправление 87c0927:
+- всплывающее окно Popup, у которого прямой потомок — ToolTip с ClassName «ToolTip» и Name «Autodesk.Windows.RibbonToolTip»
+  (RevitIds.Dialogs.RibbonToolTipClass/RibbonToolTipName), — подсказка ленты: ResetPlanner её не закрывает Esc, не считает модальной и провалом;
+  ResetUi пишет «подсказка ленты не мешает, оставлена: …» один раз за уборку. Прочие Popup — как раньше (Esc, не закрылось — Remaining);
+- RevitRibbon.Click и ClickInMenu (в том числе кнопка свёрнутой панели) после нажатия переносят курсор в центр клиентской области главного
+  окна Revit (UiAct.ParkMouse: SetCursorPos, только если главное окно и окно в точке принадлежат pid Revit; клика нет).
+Наблюдение к причине: в запуске D до появления подсказки тесты мышь не двигали — курсор остался на ленте (около 136,161) от клика по
+переключателю Properties в запуске A, и подсказка всплыла под ним в новом Revit.
+Модульные тесты 387/387: подсказка распознаётся по FakeNode, обычный Popup — нет; подсказка → Done/MainDisabled, обычный Popup рядом → Escape;
+ParkMouse не двигает курсор при нулевом окне и окне чужого процесса. Снимок API: +2 константы.
+Перед запуском E (10:02:57): Revit.exe нет, session.json нет, свободный commit 1,55 ГБ; после остановки своих серверов сборки
+(dotnet build-server shutdown) — 2,10 ГБ (10:03:13). Главный потребитель — vmmem (WSL/Docker) ~4,1 ГБ. Порог 5 ГБ не выполнен: Revit не запускался,
+чужие приложения не закрывались. D1 и D3 вживую не подтверждены.
+
+## Запуск E (повтор по решению координатора) — НЕ ВЫПОЛНЕН (BLOCKED)
+12:50:01 перед запуском: Revit.exe нет, session.json нет, свободный commit 5,02 ГБ (CIM). Сборка — HEAD 3a4f41f (D1 6eec742 и D3 87c0927 в ней).
+12:50:15.954 запуск dotnet test (CloseViaUi + Host + Ribbon): CommitCheck библиотеки отказал до запуска Revit — «свободного commit 4.9 ГБ, а нужно не меньше
+5 ГБ (minFreeCommitGb)»; крупнейшие: vmmem (pid 35920) 4,0 ГБ, DtsApo4Service 2,6 ГБ, devenv ×4 (1,4/1,0/0,9/0,8 ГБ), dwm 1,3 ГБ, avp 0,8 ГБ.
+Все 14 тестов — отказ OneTimeSetUp каждого класса (31–653 мс), тела тестов не выполнялись. Revit не запускался; после отказа (12:50:38): Revit.exe нет,
+session.json нет, свободный commit 5,01 ГБ. Разница ~0,1 ГБ — сам процесс dotnet test/testhost. D1 и D3 вживую не подтверждены.
+
+## Запуск E — выполнен (порог свободного commit 3 ГБ по решению координатора: REVIT_UI_MIN_FREE_COMMIT_GB=3 для dotnet test; revit-ui-tests.json не менялся)
+Сборка — HEAD 3a4f41f/7163b9f (код = 87c0927: D1 6eec742 + D3 87c0927). Перед запуском (12:54:32): Revit.exe нет, session.json нет, свободный commit 4,67 ГБ
+(CIM), CommitCheck: «4.6 ГБ ≥ 3 ГБ». Revit pid 37452, готов за 42 с. Конфигурация в журнале: minFreeCommitGb=3.
+| Класс.Тест | Итог | Время |
+| CloseViaUi.Ui_close_of_modified_document_answers_save_changes | PASS | 43 с |
+| CloseViaUi.CloseActiveDocument_closes_modified_document_without_saving | PASS | 21 с |
+| Host.New_model_is_saved_to_serve_folder_and_active | PASS | 2 с |
+| Host.Idle_becomes_true_after_quiet_period | PASS | 5 с |
+| Host.Run_active_with_expected_title_passes | PASS | 2 с |
+| Host.Run_active_with_wrong_title_is_reported_as_failure | PASS | 2 с |
+| Host.Properties_pane_is_found_hidden_and_shown_again | PASS (все Assert, включая запомненную страницу) | 3 мин 46 с |
+| Host.Unknown_modal_fails_reset_and_known_entry_closes_it | PASS | 14 с |
+| Ribbon (6 тестов) | PASS, 6/6 | 3–47 с |
+Итого: CloseViaUi 2/2, Host 6/6, Ribbon 6/6 — 14/14.
+
+### D1 — Properties, журнал шагов (модель new-3 открыта)
+12:56:54.063 > Найти панель Properties (полный поиск)
+12:57:14.134 > Dump(8) запомненной панели                    — Find 20,1 с
+12:57:14.607 > ValueOf выбора элемента запомненной панели      — Dump(8) 0,47 с
+12:57:14.721 > Переключатель Properties и скрытие              — ValueOf 0,11 с
+12:57:36.452   клик по переключателю: скрыть Properties (136,161)
+12:58:34.589 > Запомненная панель после скрытия
+12:58:58.767 > Показать Properties                              — pane.IsShown = false за 24,2 с (окно рамки скрыто → полный поиск → панели нет)
+12:59:08.383   клик по переключателю: показать Properties (136,161)
+12:59:45.401 > Запомненная панель после показа
+13:00:12.499 > ValueOf выбора элемента переразрешённой панели  — pane.IsShown = true за 27,1 с (полный поиск нашёл новую рамку)
+13:00:12.620 > Конец теста Properties                          — ValueOf переразрешённой страницы 0,12 с
+Доказательство скрытия: «показанной панели нет за 15 с — True; ToggleState Off; рамок «Properties» в дереве UIA: 0». Риск (a) закрыт вживую:
+запомненная страница видит скрытие и переразрешается на рамку снова показанной панели. Возврат AfterTest «показать Properties» ничего не делал — панель показана.
+
+### D3 — подсказка ленты
+Строк «подсказка ленты не мешает» в журнале — 0, «не закрылось по Esc» — 0: подсказка в этом запуске не появлялась, ветка распознавания вживую не
+сработала (подтверждена только модульными тестами). Курсор перенесён в центр главного окна 7 раз (после Click/ClickInMenu), отказов переноса — 0;
+точка (1440,864), в узком окне теста свёрнутых панелей — (1767,350). Единственная «уборка не закончена» — ожидаемое «неизвестное модальное окно
+«Project Units»» в Unknown_modal (13:00:52.240). В ribbon-pulldown всплывающих окон ленты до раскрытия — 0 (в запуске A была подсказка «Materials»).
+
+### Конец сеанса
+Изменённый new-5 → WM_CLOSE 13:03:33.098 → TDM_CLICK_BUTTON 7 «Save File» 13:03:34.191 → 13:03:43.480 «Revit pid 37452 закрыт без Kill» (12 с от начала).
+После запуска: Revit.exe нет, session.json нет, свободный commit 5,66 ГБ, windowPlacement 1236,0,1063,700 и Maximized=1 — без изменений.

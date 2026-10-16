@@ -1,0 +1,25 @@
+﻿# 2026-10-16 02:32, Revit 2022 ENU, MAHACH
+## Показанная панель «Properties» (DockablePanePage.Dump(8))
+[Pane] cls="Afx:ControlBar:ff7b0000:8:10003:10" id="60164" name="Properties" {X=3146,Y=439,Width=690,Height=1549} pat=[LegacyIAccessible]
+  [Pane] cls="Afx:00007FF6FF7B0000:b:0000000000010003:0000000000000006:0000000004CA0937" {X=3146,Y=439,Width=690,Height=1549} pat=[LegacyIAccessible]
+    [Text] cls="Static" id="12520" {X=3146,Y=439,Width=803,Height=160} pat=[LegacyIAccessible]
+    [ComboBox] cls="ComboBox" id="3119" value="Structural Plan: Level 1" {X=3146,Y=600,Width=546,Height=45} pat=[ExpandCollapse,LegacyIAccessible,Value]
+      [Text] value="Structural Plan: Level 1" offscreen {X=3,Y=3,Width=502,Height=39} pat=[LegacyIAccessible,Value]
+      [Button] id="DropDown" name="Открыть" {X=3655,Y=601,Width=36,Height=43} pat=[Invoke,LegacyIAccessible]
+    [Button] cls="Button" id="1105" name="Edit Type" {X=3693,Y=600,Width=143,Height=45} pat=[Invoke,LegacyIAccessible]
+    [Pane] cls="GXWND" id="1102" name="Custom1" {X=3146,Y=646,Width=690,Height=1289} pat=[LegacyIAccessible,Scroll]
+      [ScrollBar] id="NonClientVerticalScrollBar" name="По вертикали" {X=3798,Y=646,Width=38,Height=1289} pat=[LegacyIAccessible,RangeValue]
+        [Button] id="UpButton" name="Строка вверх" {X=3798,Y=646,Width=38,Height=38} pat=[Invoke,LegacyIAccessible]
+        [Thumb] id="ScrollbarThumb" name="Положение" {X=3798,Y=684,Width=38,Height=870} pat=[LegacyIAccessible]
+        [Button] id="DownPageButton" name="Прокрутить вниз" {X=3798,Y=1554,Width=38,Height=343} pat=[Invoke,LegacyIAccessible]
+        [Button] id="DownButton" name="Строка вниз" {X=3798,Y=1897,Width=38,Height=38} pat=[Invoke,LegacyIAccessible]
+    [Pane] cls="SysLink" id="4536" name="Properties help" {X=3148,Y=1939,Width=523,Height=45} pat=[LegacyIAccessible]
+      [Hyperlink] name="Properties help" {X=3148,Y=1939,Width=179,Height=37} pat=[Invoke,LegacyIAccessible]
+    [Button] cls="Button" id="1005" name="Apply" disabled {X=3672,Y=1936,Width=163,Height=51} pat=[Invoke,LegacyIAccessible]
+    [Pane] cls="Pane" name="MPPTypeSelectorHostWnd" {X=3146,Y=439,Width=690,Height=160} pat=[LegacyIAccessible,SynchronizedInput]
+      [Custom] id="TypeSelector_RibbonItemControl" name="Structural Plan" {X=3146,Y=439,Width=691,Height=162} pat=[LegacyIAccessible,SynchronizedInput]
+        [ComboBox] cls="ComboBox" id="TypeSelector" {X=3146,Y=439,Width=691,Height=162} pat=[ExpandCollapse,ItemContainer,LegacyIAccessible,Selection,SynchronizedInput]
+
+## После клика по переключателю «ID_TOGGLE_PROPERTIES_PALETTE»: показанной панели нет за 15 с — True; ToggleState Off
+Рамок «Properties» в дереве UIA (FindPanes, без отбора по экрану): 0
+

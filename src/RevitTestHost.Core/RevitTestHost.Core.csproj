@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Ядро хоста без Revit API и без внешних пакетов: JSON, отчёт, отбор тестов, протокол и сервер канала.
+       Грузится в процесс Revit рядом с RevitTestHost.Addin.dll, поэтому зависимостей быть не должно. -->
+  <PropertyGroup>
+    <TargetFrameworks>net47;net8.0-windows</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RevitTestHost.Core</RootNamespace>
+    <AssemblyName>RevitTestHost.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RevitTestHost.Tests" />
+  </ItemGroup>
+
+</Project>

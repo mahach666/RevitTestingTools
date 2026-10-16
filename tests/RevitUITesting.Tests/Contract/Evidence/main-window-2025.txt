@@ -1,0 +1,5 @@
+﻿# 2026-10-16 02:48, Revit 2025 ENU, MAHACH
+Name: Autodesk Revit 2025.1 - [Home]
+ClassName: Window
+ping: Revit 2025, pid 35564, сервер 1.0, idle=True, активный документ: нет
+«3c3070c3-691c-4fe1-82c1-4368382d2aa0Monitor» [WindowsForms10.Window.8.app.0.b7ab7b_r3_ad1]

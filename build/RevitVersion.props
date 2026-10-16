@@ -1,0 +1,34 @@
+<Project>
+
+  <!-- Год Revit выбирает среду выполнения надстройки: 2020 net47, 2021-2024 net48, 2025-2026 net8.0, 2027 net10.0 -->
+  <PropertyGroup>
+    <RevitVersion Condition="'$(RevitVersion)' == ''">2022</RevitVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RevitVersion)' == '2020'">
+    <TargetFramework>net47</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(RevitVersion)' == '2021' Or '$(RevitVersion)' == '2022' Or '$(RevitVersion)' == '2023' Or '$(RevitVersion)' == '2024'">
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(RevitVersion)' == '2025' Or '$(RevitVersion)' == '2026'">
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(RevitVersion)' == '2027'">
+    <TargetFramework>net10.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Куда Debug-сборка кладёт надстройку. Revit 2027 не загружает манифесты из %ProgramData% (журнал: «All-users Add-in
+       manifest files must be installed to: C:\Program Files\Autodesk\Revit\Addins\2027»), а Program Files требует прав
+       администратора, поэтому 2027 получает папку пользователя %AppData%. По Autodesk (blog.autodesk.io, «Revit 2027 SDK: .NET 10
+       Migration and Key API Changes») перенос начат в 2027; 2026 и раньше читают %ProgramData%. -->
+  <PropertyGroup>
+    <RevitAddinsRoot>$(PROGRAMDATA)\Autodesk\Revit\Addins\$(RevitVersion)\</RevitAddinsRoot>
+    <RevitAddinsRoot Condition="'$(RevitVersion)' == '2027'">$(APPDATA)\Autodesk\Revit\Addins\$(RevitVersion)\</RevitAddinsRoot>
+  </PropertyGroup>
+
+  <Target Name="CheckRevitVersion" BeforeTargets="_CheckForInvalidConfigurationAndPlatform;Restore" Condition="'$(TargetFramework)' == ''">
+    <Error Text="RevitVersion '$(RevitVersion)' не поддерживается: допустимы годы с 2020 по 2027 (например, -p:RevitVersion=2024)." />
+  </Target>
+
+</Project>

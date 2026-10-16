@@ -1,0 +1,7 @@
+﻿# 2026-10-16 02:35, Revit 2022 ENU, MAHACH
+Name: Autodesk Revit 2022 - [Home]
+ClassName: Window
+ping: Revit 2022, pid 53276, сервер 1.0, idle=True, активный документ: нет
+«f19db8a0-9a85-418a-85d1-63ae1ae4cbd4Monitor» [WindowsForms10.Window.8.app.0.b389fb_r186_ad1]
+
+«Family» [Afx:00007FF6FF7B0000:8:0000000000010003:0000000000000000:0000000000000000]

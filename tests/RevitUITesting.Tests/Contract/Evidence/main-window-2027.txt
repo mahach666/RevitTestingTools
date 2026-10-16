@@ -1,0 +1,5 @@
+﻿# 2026-10-16 03:02, Revit 2027 ENU, MAHACH
+Name: Autodesk Revit 2027.2 - [Home]
+ClassName: Window
+ping: Revit 2027, pid 4492, сервер 1.0, idle=True, активный документ: нет
+«56947491-49ee-4e2b-99af-82d454bc09bcMonitor» [WindowsForms10.Window.8.app.0.3a9d874_r3_ad1]
